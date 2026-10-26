@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-primary: #8b5cf6;
+  --color-gold: #f1cf78;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+:root {
+  --background: #201c2a;
+  --foreground: #f4f1fa;
+  --surface: #262133;
+  --surface-elevated: #2e283d;
+  --surface-raised: #38324b;
+  --border: rgba(244, 241, 250, 0.09);
+  --border-strong: rgba(244, 241, 250, 0.17);
+  --muted: #b3abc7;
+  --muted-foreground: #847d99;
+  --accent: #a78bfa;
+  --accent-strong: #8b5cf6;
+  --accent-foreground: #1d1430;
+  --gold: #f1cf78;
+  --nav-bg: rgba(32, 28, 42, 0.6);
+  --glow: rgba(139, 92, 246, 0.14);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 48px -16px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+:root.light {
+  --background: #ede8f6;
+  --foreground: #241d33;
+  --surface: #f5f1fb;
+  --surface-elevated: #e9e1f5;
+  --surface-raised: #ddd1ef;
+  --border: rgba(36, 29, 51, 0.1);
+  --border-strong: rgba(36, 29, 51, 0.2);
+  --muted: #5d5470;
+  --muted-foreground: #7e7494;
+  --accent: #6d28d9;
+  --accent-strong: #7c3aed;
+  --accent-foreground: #ffffff;
+  --gold: #9a6b12;
+  --nav-bg: rgba(237, 232, 246, 0.65);
+  --glow: rgba(124, 58, 237, 0.1);
+  --shadow-card: 0 1px 2px rgba(36, 29, 51, 0.08), 0 18px 48px -20px rgba(76, 53, 130, 0.3);
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--gold);
+  color: #241d33;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.font-serif-it {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.font-mono2 {
+  font-family: var(--font-mono);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.surface-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Marquee: duplicate track, translate -50%. Pauses on hover; disabled with reduced motion. */
+.marquee-track {
+  animation: marquee 36s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+  }
+}
+
+/* Squircle-ish app icon */
+.squircle {
+  border-radius: 23%;
+}
