@@ -7,7 +7,8 @@ export function Philosophy() {
 		<section
 			id="about"
 			aria-labelledby="ph-h"
-			className="border-y"
+			className="border-y scroll-mt-28"
+			// className="mx-auto max-w-6xl scroll-mt-28 px-5 md:px-8 py-14 md:py-20"
 			style={{ borderColor: "var(--border)", background: "var(--surface)" }}
 		>
 			<div className="mx-auto max-w-6xl px-5 md:px-8 py-14 md:py-20">
