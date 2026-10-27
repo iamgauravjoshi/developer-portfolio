@@ -68,7 +68,7 @@ export default function Contact() {
       <div className="mx-auto max-w-6xl px-5 md:px-8 py-14 md:py-24">
         <span id="ct-h" className="sr-only">Contact</span>
         <SectionHeading
-          index="08"
+          index="07"
           eyebrow="Contact"
           title={<>Have something <span className="font-serif-it" style={{ color: 'var(--accent)' }}>worth building?</span></>}
           body="Roles, freelance builds, collaborations. I reply personally."

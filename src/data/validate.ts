@@ -38,15 +38,8 @@ export function validatePortfolioContent(projects: Project[], skillGroups: Skill
 
     const skillNames = new Set<string>();
     for (const skill of group.skills) {
-      if (skillNames.has(skill.name)) errors.push(`Duplicate skill "${skill.name}" in group "${group.id}".`);
-      skillNames.add(skill.name);
-
-      const referencedIds = new Set<string>();
-      for (const id of skill.projectIds ?? []) {
-        if (referencedIds.has(id)) errors.push(`Skill "${skill.name}" repeats project reference "${id}".`);
-        if (!ids.has(id)) errors.push(`Skill "${skill.name}" references missing project id "${id}".`);
-        referencedIds.add(id);
-      }
+      if (skillNames.has(skill)) errors.push(`Duplicate skill "${skill}" in group "${group.id}".`);
+      skillNames.add(skill);
     }
   }
 

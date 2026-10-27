@@ -1,25 +1,29 @@
 "use client";
 
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useSpring } from 'motion/react';
+import { ArrowUpRight, MapPin } from 'lucide-react';
 import { experience } from '@/data/experience';
 import { profile } from '@/data/profile';
-import { SectionHeading, Chip } from '@/components/ui/primitives';
+import { SectionHeading } from '@/components/ui/primitives';
 import { Reveal } from '@/components/motion/primitives';
-import { cn } from '@/lib/utils';
 
 export default function Experience() {
-  const [open, setOpen] = useState<string | null>(experience[0]?.id ?? null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 75%', 'end 25%'],
+  });
+  const lineProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   return (
     <section id="experience" aria-labelledby="exp-h" className="border-y" style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}>
       <div className="mx-auto max-w-6xl px-5 md:px-8 py-14 md:py-20">
         <span id="exp-h" className="sr-only">Experience</span>
         <SectionHeading
-          index="04"
+          index="02"
           eyebrow="Experience"
-          title={<>A timeline with <span className="font-serif-it" style={{ color: 'var(--accent)' }}>receipts, not filler</span></>}
+          title="Experience"
           body="Production software, secure application workflows, and interactive 3D experiences."
         />
 
@@ -62,53 +66,70 @@ export default function Experience() {
             </div>
           </Reveal>
         ) : (
-          <div className="space-y-3">
+          <>
+          <div ref={timelineRef} className="relative mt-10 md:mt-14">
+            <div
+              aria-hidden="true"
+              className="absolute bottom-0 left-[0.875rem] top-0 w-px bg-[var(--border-strong)] lg:left-[calc(37.5%+0.375rem)]"
+            />
+            <motion.div
+              aria-hidden="true"
+              className="absolute left-[0.875rem] top-0 w-px origin-top bg-[var(--accent)] shadow-[0_0_12px_var(--accent)] lg:left-[calc(37.5%+0.375rem)]"
+              style={{ height: '100%', scaleY: lineProgress }}
+            />
+            <div className="space-y-16 md:space-y-24">
             {experience.map((e, i) => {
-              const isOpen = open === e.id;
+              const roles = e.careerProgression ?? [{ position: e.position, period: e.period, responsibilities: e.responsibilities ?? [] }];
               return (
                 <Reveal key={e.id} delay={Math.min(i * 0.05, 0.15)}>
-                  <article className="overflow-hidden rounded-[1.75rem]" style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)' }}>
-                    <button
-                      onClick={() => setOpen(isOpen ? null : e.id)}
-                      aria-expanded={isOpen}
-                      className="flex w-full items-center gap-4 p-5 md:p-6 text-left"
-                    >
-                      <span className="font-mono2 text-[12px]" style={{ color: 'var(--accent)' }}>{String(i + 1).padStart(2, '0')}</span>
-                      <span className="flex-1">
-                        <span className="font-display block text-lg font-semibold">{e.position}</span>
-                        <span className="mt-0.5 block text-sm" style={{ color: 'var(--muted)' }}>{e.company} · {e.period}{e.location ? ` · ${e.location}` : ''}</span>
-                      </span>
-                      <ChevronDown className={cn('h-5 w-5 shrink-0 transition-transform duration-300', isOpen && 'rotate-180')} aria-hidden />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <div className="px-5 pb-6 md:px-6 md:pl-[3.25rem]">
-                            <p className="max-w-3xl text-[15px] leading-relaxed" style={{ color: 'var(--muted)' }}>{e.summary}</p>
-                            <ul className="mt-4 max-w-3xl space-y-2">
-                              {e.responsibilities.map((r) => (
-                                <li key={r} className="flex gap-2.5 text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-                                  <span aria-hidden style={{ color: 'var(--accent)' }}>→</span> {r}
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="mt-4 flex flex-wrap gap-1.5">
-                              {e.technologies.map((t) => <Chip key={t}>{t}</Chip>)}
-                            </div>
-                          </div>
-                        </motion.div>
+                  <article className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-4 gap-y-3 lg:grid-cols-[minmax(0,0.9fr)_3rem_minmax(0,1.5fr)] lg:gap-x-0 lg:gap-y-0">
+                    <div className="hidden self-start pt-0.5 text-left lg:col-start-1 lg:block" style={{ gridRow: `1 / span ${roles.length}` }}>
+                      <p className="font-mono2 text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>{e.period}</p>
+                      <h3 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{e.company}</h3>
+                      {e.location && (
+                        <p className="mt-4 inline-flex items-center justify-start gap-1.5 font-mono2 text-[10px] uppercase tracking-[0.16em]" style={{ color: 'var(--muted)' }}>
+                          <MapPin className="h-3.5 w-3.5" aria-hidden />{e.location}
+                        </p>
                       )}
-                    </AnimatePresence>
+                    </div>
+
+                    {roles.map((role, roleIndex) => (
+                      <div key={`${e.id}-${role.position}`} className="contents">
+                        <div
+                          className="relative z-10 col-start-1 row-start-1 flex justify-center lg:col-start-2"
+                          style={{ gridRow: roleIndex + 1 }}
+                        >
+                          <span className="mt-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--accent)] bg-[var(--surface)] shadow-[0_0_0_6px_var(--glow)]">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                          </span>
+                        </div>
+                        <div
+                          className="col-start-2 row-start-1 pb-5 lg:col-start-3 lg:pb-8"
+                          style={{ gridRow: roleIndex + 1 }}
+                        >
+                          {roleIndex === 0 && <p className="mb-1 text-sm font-medium lg:hidden" style={{ color: 'var(--muted)' }}>{e.company}</p>}
+                          <p className="font-mono2 text-[10px] uppercase tracking-[0.16em]" style={{ color: 'var(--accent)' }}>{role.period}</p>
+                          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <h4 className="font-display text-xl font-semibold leading-tight tracking-tight md:text-2xl">{role.position}</h4>
+                            {roleIndex === roles.length - 1 && <span className="rounded-full border px-2 py-0.5 font-mono2 text-[9px] uppercase tracking-[0.16em]" style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}>Current</span>}
+                          </div>
+                          <ul className="mt-3 max-w-3xl space-y-1.5">
+                            {role.responsibilities.map((responsibility) => (
+                              <li key={responsibility} className="flex gap-2.5 text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                                <span className="mt-[0.6rem] h-px w-3 shrink-0" aria-hidden style={{ background: 'var(--accent)' }} />{responsibility}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
                   </article>
                 </Reveal>
               );
             })}
+            </div>
           </div>
+          </>
         )}
       </div>
     </section>

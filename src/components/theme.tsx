@@ -9,39 +9,36 @@ interface ThemeCtx {
   toggle: () => void;
 }
 
-const Ctx = createContext<ThemeCtx>({ theme: 'dark', toggle: () => {} });
+const Ctx = createContext<ThemeCtx>({ theme: 'light', toggle: () => {} });
 
 const KEY = 'gj-theme';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Always start at 'dark' so the first client render matches SSR.
-  // The stored / OS preference is applied after mount (theme-init.js
-  // already set the <html> class pre-hydration, so there is no flash).
-  const [theme, setTheme] = useState<Theme>('dark');
+  // Match the server-rendered light default. theme-init.js applies any saved
+  // preference before paint; adopt its result after hydration without briefly
+  // overwriting the document's class.
+  const [theme, setTheme] = useState<Theme>('light');
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(KEY);
-    const next: Theme =
-      stored === 'dark' || stored === 'light'
-        ? stored
-        : window.matchMedia('(prefers-color-scheme: light)').matches
-          ? 'light'
-          : 'dark';
-    // Syncing stored preference after mount so the first client render
-    // matches SSR (prevents Sun/Moon hydration mismatch).
+    const next: Theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (next !== 'dark') setTheme(next);
+    setTheme(next);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setInitialized(true);
   }, []);
 
   useEffect(() => {
+    if (!initialized) return;
+
     const root = document.documentElement;
     root.classList.toggle('light', theme === 'light');
     root.classList.toggle('dark', theme === 'dark');
     root.style.colorScheme = theme;
     window.localStorage.setItem(KEY, theme);
     const tint = document.querySelector('meta[name="theme-color"]');
-    if (tint) tint.setAttribute('content', theme === 'dark' ? '#201c2a' : '#ede8f6');
-  }, [theme]);
+    if (tint) tint.setAttribute('content', theme === 'dark' ? '#201c2a' : '#ffffff');
+  }, [theme, initialized]);
 
   const toggle = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), []);
 

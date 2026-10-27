@@ -98,7 +98,7 @@ export default function Hero() {
           <span className="font-serif-it text-[1.35em] leading-none" style={{ color: 'var(--foreground)' }}>
             I design, build and ship products{' '}
           </span>
-          for the web — team, freelance & indie.
+          for product teams and independent projects.
         </motion.p>
 
         <motion.div

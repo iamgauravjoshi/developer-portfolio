@@ -4,13 +4,11 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme";
 import SiteChrome from "@/components/SiteChrome";
-import { getYear } from "@/lib/year";
-import { clientWork } from "@/data/clientWork";
 import { projects } from "@/data/projects";
 import { skillGroups } from "@/data/skills";
 import { validatePortfolioContent } from "@/data/validate";
 
-validatePortfolioContent([...clientWork, ...projects], skillGroups);
+validatePortfolioContent(projects, skillGroups);
 
 const sans = Inter({ subsets: ["latin"], variable: "--next-sans", display: "swap" });
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--next-display", display: "swap" });
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s — Gaurav Joshi",
   },
   description:
-    "Gaurav Joshi is a Senior Software Engineer building reliable web products, polished interfaces, and systems that scale — professional engineering, freelance client work, and independent open-source projects.",
+    "Gaurav Joshi is a Senior Software Engineer building reliable web products, polished interfaces, and systems that scale — professional engineering and independent projects.",
   authors: [{ name: "Gaurav Joshi" }],
   alternates: { canonical: "/" },
   openGraph: {
@@ -40,20 +38,20 @@ export const metadata: Metadata = {
     siteName: "Gaurav Joshi — Senior Software Engineer",
     title: "Gaurav Joshi — Senior Software Engineer",
     description:
-      "Engineer who builds products, not just interfaces. Professional engineering, client work, and independent projects.",
+      "Engineer who builds products, not just interfaces. Professional engineering and independent projects.",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: "Gaurav Joshi — Senior Software Engineer",
     description:
-      "Full-stack product engineering: React, TypeScript, Next.js, Node.js. Client work for real businesses plus open-source projects.",
+      "Full-stack product engineering: React, TypeScript, Next.js, and Node.js. Professional experience and independent projects.",
   },
   icons: { icon: "/favicon.svg" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#201c2a",
+  themeColor: "#ffffff",
 };
 
 const JSON_LD = {
@@ -73,10 +71,9 @@ const JSON_LD = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const year = await getYear();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" className="light" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         {/* External src (not inline): valid hoistable script, runs before hydration — no theme flash. */}
         <Script id="gj-theme" src="/theme-init.js" strategy="beforeInteractive" />
@@ -85,7 +82,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={`${sans.variable} ${display.variable} ${serif.variable} ${mono.variable}`}>
         <ThemeProvider>
-          <SiteChrome year={year}>{children}</SiteChrome>
+          <SiteChrome>{children}</SiteChrome>
         </ThemeProvider>
       </body>
     </html>

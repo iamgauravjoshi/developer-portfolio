@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from 'lucide-react'
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects';
-import { clientWork } from '@/data/clientWork';
 import { profile } from '@/data/profile';
 import { categoryMeta } from '@/data/skills';
 import { BrowserFrame, ProjectMeta } from '@/components/projects/frames';
@@ -13,7 +12,7 @@ import { Reveal } from '@/components/motion/primitives';
 import { GithubIcon } from '@/components/sections/skillIcons';
 import type { Project } from '@/types';
 
-const all = [...clientWork, ...projects];
+const all = projects;
 
 export function generateStaticParams() {
   return all.map((p) => ({ slug: p.slug }));
@@ -82,7 +81,6 @@ function CaseBody({ project }: { project: Project }) {
       <div className="mt-6">
         <ProjectMeta project={project} />
         <h1 className="font-display mt-3 max-w-3xl text-4xl md:text-6xl font-semibold text-balance">{project.title}</h1>
-        {project.client && <p className="mt-2 font-mono2 text-[13px]" style={{ color: 'var(--muted)' }}>{project.client}</p>}
         <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed" style={{ color: 'var(--muted)' }}>{project.description}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           <Chip color={meta.color}>{meta.label}</Chip>
@@ -108,7 +106,7 @@ function CaseBody({ project }: { project: Project }) {
 
       <div className="mt-8 space-y-4">
         <Block n="01" title="Context">
-          <p><span style={{ color: 'var(--foreground)' }} className="font-medium">{project.domain}.</span> {project.client ?? 'Independent build.'} {project.year}.</p>
+          <p><span style={{ color: 'var(--foreground)' }} className="font-medium">{project.domain}.</span></p>
         </Block>
         <Block n="02" title="Problem">
           <p>{project.problem}</p>

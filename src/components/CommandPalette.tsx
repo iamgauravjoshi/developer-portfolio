@@ -42,10 +42,11 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
   };
 
   const cmds: Cmd[] = [
-    { id: 'work', label: 'Go to Work', hint: '#work', run: () => go('work'), icon: ArrowUpRight },
+    { id: 'home', label: 'Go to Home', hint: '#top', run: () => go('top'), icon: ArrowUpRight },
+    { id: 'about', label: 'Go to About', hint: '#about', run: () => go('about'), icon: ArrowUpRight },
     { id: 'exp', label: 'Go to Experience', hint: '#experience', run: () => go('experience'), icon: ArrowUpRight },
+    { id: 'work', label: 'Go to Work', hint: '#work', run: () => go('work'), icon: ArrowUpRight },
     { id: 'skills', label: 'Go to Skills', hint: '#skills', run: () => go('skills'), icon: ArrowUpRight },
-    { id: 'bucket', label: 'View bucket list of dreams', hint: '/bucket-list', run: () => { onClose(); router.push('/bucket-list'); }, icon: ArrowUpRight },
     { id: 'contact', label: 'Go to Contact', hint: '#contact', run: () => go('contact'), icon: Mail },
     { id: 'gh', label: 'Open GitHub', hint: 'external', run: () => { window.open(profile.github, '_blank', 'noopener,noreferrer'); onClose(); }, icon: GithubIcon },
     { id: 'li', label: 'Open LinkedIn', hint: 'external', run: () => { window.open(profile.linkedin, '_blank', 'noopener,noreferrer'); onClose(); }, icon: LinkedinIcon },

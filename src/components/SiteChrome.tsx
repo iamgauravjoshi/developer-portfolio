@@ -11,7 +11,7 @@ import CommandPalette from '@/components/CommandPalette';
 
 const BootIntro = dynamic(() => import('@/components/layout/BootIntro'), { ssr: false });
 
-export default function SiteChrome({ children, year }: { children: React.ReactNode; year: number }) {
+export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const [palette, setPalette] = useState(false);
   const [easter, setEaster] = useState(false);
 
@@ -20,7 +20,8 @@ export default function SiteChrome({ children, year }: { children: React.ReactNo
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
+      if ((e.metaKey || e.ctrlKey) && key === 'k') {
         e.preventDefault();
         setPalette((p) => !p);
       }
@@ -34,7 +35,8 @@ export default function SiteChrome({ children, year }: { children: React.ReactNo
     const seq = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
     let i = 0;
     const onKey = (e: KeyboardEvent) => {
-      i = e.key.toLowerCase() === seq[i] ? i + 1 : 0;
+      const key = typeof e.key === 'string' ? e.key.toLowerCase() : '';
+      i = key === seq[i] ? i + 1 : 0;
       if (i === seq.length) {
         i = 0;
         setEaster(true);
@@ -46,13 +48,13 @@ export default function SiteChrome({ children, year }: { children: React.ReactNo
   }, []);
 
   return (
-    <div className="min-h-screen pb-24 md:pb-0" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
+    <div className="flex min-h-screen flex-col" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
       <ScrollManager />
       <BootIntro />
       <ScrollProgress />
       <Navbar onCommand={openPalette} />
-      {children}
-      <Footer year={year} />
+      <div className="flex flex-1 flex-col pb-24 md:pb-0">{children}</div>
+      <Footer />
       <CommandPalette open={palette} onClose={closePalette} />
       <AnimatePresence>
         {easter && (

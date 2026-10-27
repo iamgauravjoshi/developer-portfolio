@@ -20,6 +20,30 @@
 }
 
 :root {
+  --background: #ffffff;
+  --foreground: #241d33;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-raised: #ffffff;
+  --border: rgba(36, 29, 51, 0.1);
+  --border-strong: rgba(36, 29, 51, 0.2);
+  --muted: #5d5470;
+  --muted-foreground: #7e7494;
+  --accent: #6d28d9;
+  --accent-strong: #7c3aed;
+  --accent-foreground: #ffffff;
+  --gold: #9a6b12;
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --social-github: #181717;
+  --social-linkedin: #0a66c2;
+  --social-email: #ea4335;
+  --social-x: #000000;
+  --glow: rgba(124, 58, 237, 0.1);
+  --shadow-card: 0 1px 2px rgba(36, 29, 51, 0.08), 0 18px 48px -20px rgba(76, 53, 130, 0.3);
+  color-scheme: light;
+}
+
+:root.dark {
   --background: #201c2a;
   --foreground: #f4f1fa;
   --surface: #262133;
@@ -34,29 +58,13 @@
   --accent-foreground: #1d1430;
   --gold: #f1cf78;
   --nav-bg: rgba(32, 28, 42, 0.6);
+  --social-github: #f5f5f5;
+  --social-linkedin: #0a66c2;
+  --social-email: #ea4335;
+  --social-x: #f5f5f5;
   --glow: rgba(139, 92, 246, 0.14);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 48px -16px rgba(0, 0, 0, 0.6);
   color-scheme: dark;
-}
-
-:root.light {
-  --background: #ede8f6;
-  --foreground: #241d33;
-  --surface: #f5f1fb;
-  --surface-elevated: #e9e1f5;
-  --surface-raised: #ddd1ef;
-  --border: rgba(36, 29, 51, 0.1);
-  --border-strong: rgba(36, 29, 51, 0.2);
-  --muted: #5d5470;
-  --muted-foreground: #7e7494;
-  --accent: #6d28d9;
-  --accent-strong: #7c3aed;
-  --accent-foreground: #ffffff;
-  --gold: #9a6b12;
-  --nav-bg: rgba(237, 232, 246, 0.65);
-  --glow: rgba(124, 58, 237, 0.1);
-  --shadow-card: 0 1px 2px rgba(36, 29, 51, 0.08), 0 18px 48px -20px rgba(76, 53, 130, 0.3);
-  color-scheme: light;
 }
 
 html {
@@ -137,6 +145,20 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+.section-nav-link {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+.section-nav-link:hover,
+.section-nav-link:focus-visible,
+.section-nav-link[aria-current="location"] {
+  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  color: var(--accent);
 }
 
 .link-underline {

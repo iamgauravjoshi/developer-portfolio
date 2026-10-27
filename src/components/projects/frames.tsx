@@ -66,9 +66,7 @@ export function ProjectMeta({ project }: { project: Project }) {
         <span className="h-1.5 w-1.5 rounded-full" style={{ background: meta.color }} aria-hidden />
         {meta.label}
       </span>
-      <span>{project.year}</span>
       <span>{project.domain}</span>
-      <span>{project.status}</span>
     </div>
   );
 }

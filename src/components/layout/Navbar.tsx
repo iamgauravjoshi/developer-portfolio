@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'motion/react';
-import { ArrowUpRight, BriefcaseBusiness, Code2, History, Mail, Moon, Sun, UserRound } from 'lucide-react';
+import { ArrowUpRight, BriefcaseBusiness, Code2, History, House, Mail, Moon, Sun, UserRound } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { navLinks } from '@/data/socials';
 import { profile } from '@/data/profile';
@@ -9,7 +9,7 @@ import { useActiveSection, useScrolled } from '@/components/hooks';
 import { useTheme } from '@/components/theme';
 import { GithubIcon } from '@/components/sections/skillIcons';
 
-const sectionIds = ['work', 'experience', 'skills', 'about', 'contact'];
+const sectionIds = ['top', 'about', 'experience', 'work', 'skills', 'contact'];
 
 export default function Navbar({ onCommand }: { onCommand: () => void }) {
   const pathname = usePathname();
@@ -60,15 +60,17 @@ export default function Navbar({ onCommand }: { onCommand: () => void }) {
               <li key={l.href}>
                 <a
                   href={sectionHref(l.href)}
-                  aria-current={isActive ? 'true' : undefined}
-                  className="relative block rounded-full px-3.5 py-2 text-[13px] font-semibold tracking-[-0.01em] transition-colors"
-                  style={{ color: isActive ? 'var(--foreground)' : 'var(--muted)' }}
+                  aria-current={isActive ? 'location' : undefined}
+                  className="section-nav-link relative block rounded-full px-3.5 py-2 text-[13px] font-semibold tracking-[-0.01em]"
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-full"
-                      style={{ background: 'var(--surface-raised)' }}
+                      style={{
+                        background: 'color-mix(in srgb, var(--accent) 9%, var(--surface))',
+                        border: '1px solid color-mix(in srgb, var(--accent) 28%, transparent)',
+                      }}
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
@@ -128,10 +130,11 @@ export default function Navbar({ onCommand }: { onCommand: () => void }) {
 }
 
 const dockItems = [
-  { label: 'Work', href: '#work', Icon: BriefcaseBusiness },
-  { label: 'Experience', href: '#experience', Icon: History },
-  { label: 'Skills', href: '#skills', Icon: Code2 },
+  { label: 'Home', href: '#top', Icon: House },
   { label: 'About', href: '#about', Icon: UserRound },
+  { label: 'Experience', href: '#experience', Icon: History },
+  { label: 'Work', href: '#work', Icon: BriefcaseBusiness },
+  { label: 'Skills', href: '#skills', Icon: Code2 },
   { label: 'Contact', href: '#contact', Icon: Mail },
 ];
 
@@ -156,13 +159,9 @@ function MobileDock({ sectionHref, active }: { sectionHref: (href: string) => st
             key={href}
             href={sectionHref(href)}
             aria-current={isActive ? 'location' : undefined}
-            className="flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-full py-2 text-[9px] font-semibold leading-none transition-colors"
-            style={{
-              background: isActive ? 'var(--surface-raised)' : 'transparent',
-              color: isActive ? 'var(--foreground)' : 'var(--muted)',
-            }}
+            className="section-nav-link flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-full py-2 text-[8px] font-semibold leading-none"
           >
-            <Icon className="h-[18px] w-[18px] shrink-0" aria-hidden />
+            <Icon className="h-4 w-4 shrink-0" aria-hidden />
             <span className="truncate">{label}</span>
           </a>
         );

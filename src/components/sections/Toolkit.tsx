@@ -1,100 +1,103 @@
 "use client";
 
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { skillIcon } from './skillIcons';
+import { techStack } from '@/data/techStack';
 import { skillGroups } from '@/data/skills';
 import { SectionHeading } from '@/components/ui/primitives';
 import { Reveal } from '@/components/motion/primitives';
-import { Tilt } from '@/components/motion/effects';
-import { skillIcon } from './skillIcons';
-import { cn } from '@/lib/utils';
 
-const ctxColors = { professional: '#7c9eff', freelance: '#e8b44a', personal: '#a78bfa' } as const;
-const ctxVerbs = { professional: 'Pro', freelance: 'Client', personal: 'Indie' } as const;
+const visibleSkillGroups = skillGroups.filter(
+  ({ id }) => !['ai-engineering', 'system-design', 'engineering-foundations'].includes(id),
+);
+
+const brandColorEntries: [string, string][] = [
+  ...techStack.map(({ name, color }): [string, string] => [name.toLowerCase(), color]),
+  ['javascript', '#F7DF1E'],
+  ['redux toolkit', '#764ABC'],
+  ['react hook form', '#EC5990'],
+  ['react router', '#CA4245'],
+  ['react bootstrap', '#0D6EFD'],
+  ['google maps', '#4285F4'],
+  ['material ui', '#007FFF'],
+  ['chart.js', '#FF6384'],
+  ['recharts', '#22B5BF'],
+  ['pgvector', '#336791'],
+  ['supabase', '#3ECF8E'],
+  ['razorpay', '#3395FF'],
+  ['bullmq', '#E11D48'],
+  ['shadcn', '#181717'],
+  ['ollama', '#181717'],
+  ['web mcp', '#8B5CF6'],
+  ['mongoose', '#880000'],
+  ['sass', '#CC6699'],
+  ['vite', '#646CFF'],
+  ['redux', '#764ABC'],
+  ['zod', '#3E67B1'],
+  ['bootstrap', '#7952B3'],
+  ['mcp', '#8B5CF6'],
+  ['rag', '#8B5CF6'],
+  ['java', '#ED8B00'],
+  ['html', '#E34F26'],
+  ['css', '#1572B6'],
+  ['express', '#444444'],
+  ['drizzle', '#C5F74F'],
+  ['prisma', '#2D3748'],
+  ['react query', '#FF4154'],
+  ['radix', '#161618'],
+  ['three.js', '#000000'],
+  ['redis', '#D82C20'],
+  ['rabbitmq', '#FF6600'],
+  ['vitest', '#6E9F18'],
+  ['gemini', '#8E75B2'],
+].sort(([first], [second]) => second.length - first.length);
+const brandColors = new Map(brandColorEntries);
+
+function colorForSkill(name: string) {
+  const normalized = name.toLowerCase();
+  const matchingStackItem = [...brandColors].find(([technology]) => normalized.includes(technology));
+  const color = matchingStackItem?.[1];
+  return color === '#000000' || color === '#181717' ? 'var(--foreground)' : color ?? 'var(--muted)';
+}
 
 export default function Toolkit() {
-  const [selected, setSelected] = useState<string | null>('RAG Systems');
-
   return (
-    <section id="skills" aria-labelledby="sk-h" className="mx-auto max-w-6xl scroll-mt-28 px-5 md:px-8 py-14 md:py-20">
-      <span id="sk-h" className="sr-only">Technical toolkit</span>
+    <section id="skills" aria-labelledby="sk-h" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-14 md:px-8 md:py-20">
+      <span id="sk-h" className="sr-only">Tools and skills</span>
       <SectionHeading
-        index="05"
-        eyebrow="Engineering toolkit"
-        title={<>Skills with <span className="font-serif-it" style={{ color: 'var(--accent)' }}>evidence</span></>}
-        body="Tap a tool or concept to see its context."
+        index="04"
+        eyebrow="Skills"
+        title="Tools & skills"
+        body="Languages, frameworks, platforms, and engineering foundations."
       />
-      <div className="grid gap-5 lg:grid-cols-2">
-        {skillGroups.map((g, gi) => (
-          <Reveal key={g.id} delay={Math.min(gi * 0.06, 0.18)}>
-            <Tilt max={3} className="h-full">
-              <div className="h-full rounded-[1.75rem] p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                <h3 className="font-display text-lg font-semibold">{g.label}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {g.skills.map((s) => {
-                    const isSel = selected === s.name;
-                    const Icon = skillIcon(s.name);
-                    return (
-                      <button
-                        key={s.name}
-                        onClick={() => setSelected(isSel ? null : s.name)}
-                        aria-pressed={isSel}
-                        aria-expanded={isSel}
-                        className={cn('inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono2 text-[12px] transition-all duration-200 hover:scale-[1.05] active:scale-[0.97]')}
-                        style={{
-                          borderColor: isSel ? 'var(--foreground)' : 'var(--border)',
-                          background: isSel ? 'var(--foreground)' : 'var(--surface-elevated)',
-                          color: isSel ? 'var(--background)' : 'var(--foreground)',
-                        }}
-                      >
-                        <Icon className="h-3.5 w-3.5" />
-                        {s.name}
-                      </button>
-                    );
-                  })}
-                </div>
-                <AnimatePresence initial={false}>
-                  {selected && g.skills.some((s) => s.name === selected) && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
+      <div className="mt-10 columns-1 gap-4 md:mt-14 md:columns-2">
+        {visibleSkillGroups.map((group, groupIndex) => (
+          <Reveal key={group.id} delay={groupIndex * 0.04} className="mb-4 break-inside-avoid">
+            <div className="h-full rounded-2xl border p-5 md:p-6" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+              <h3 className="font-display text-base font-semibold md:text-lg">{group.label}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {group.skills.map((skill) => {
+                  const Icon = skillIcon(skill);
+                  const color = colorForSkill(skill);
+
+                  return (
+                    <span
+                      key={skill}
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-medium sm:text-sm"
+                      style={{
+                        borderColor: 'var(--border)',
+                        background: 'var(--surface)',
+                        color: 'var(--foreground)',
+                      }}
                     >
-                      {(() => {
-                        const s = g.skills.find((x) => x.name === selected)!;
-                        const Icon = skillIcon(s.name);
-                        return (
-                          <div className="mt-4 flex items-start gap-3 rounded-2xl p-4" style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)' }}>
-                            <span className="rounded-xl p-2" style={{ background: 'var(--surface-raised)' }}>
-                              <Icon className="h-5 w-5" />
-                            </span>
-                            <div>
-                              {s.contexts.length > 0 && (
-                                <div className="flex flex-wrap gap-x-3 gap-y-1">
-                                  {s.contexts.map((c) => (
-                                    <span key={c} className="inline-flex items-center gap-1.5 font-mono2 text-[11px]" style={{ color: 'var(--muted)' }}>
-                                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: ctxColors[c] }} aria-hidden />
-                                      {ctxVerbs[c]}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                              {(s.detail || s.projects.length > 0) && (
-                                <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: 'var(--muted)' }}>
-                                  {s.detail}{s.detail && s.projects.length > 0 ? ' ' : ''}{s.projects.join(' · ')}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })()}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      <span className="shrink-0" style={{ color }} aria-hidden="true">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      {skill}
+                    </span>
+                  );
+                })}
               </div>
-            </Tilt>
+            </div>
           </Reveal>
         ))}
       </div>

@@ -14,13 +14,6 @@ export const profile = {
   availability: {
     // Only rendered when `open` is true AND the label reflects a real, current state.
     open: false,
-    label: 'Available for select freelance work',
+    label: 'Available for select software projects',
   },
 };
-
-export const proofStrip = [
-  { value: '39', label: 'Public GitHub repositories', hint: 'Verified via GitHub API' },
-  { value: '04', label: 'Client prototypes delivered', hint: 'Live & verifiable' },
-  { value: '09', label: 'Business domains shipped for', hint: 'SaaS → industrial B2B' },
-  { value: '03', label: 'Work streams, one standard', hint: 'Professional · Client · Independent' },
-];

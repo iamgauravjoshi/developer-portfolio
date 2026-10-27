@@ -1,13 +1,11 @@
-export type WorkCategory = 'professional' | 'client' | 'independent' | 'open-source';
+export type WorkCategory = 'professional' | 'independent' | 'open-source';
 
 export interface Project {
   id: string;
   slug: string;
   title: string;
   category: WorkCategory;
-  year: string;
   domain: string;
-  client?: string;
   problem: string;
   description: string;
   role: string;
@@ -29,10 +27,11 @@ export interface ExperienceEntry {
   id: string;
   company: string;
   position: string;
+  careerProgression?: Array<{ position: string; period: string; responsibilities: string[] }>;
   period: string;
   location?: string;
-  summary: string;
-  responsibilities: string[];
+  summary?: string;
+  responsibilities?: string[];
   technologies: string[];
   placeholder?: boolean;
 }
@@ -40,16 +39,7 @@ export interface ExperienceEntry {
 export interface SkillGroup {
   id: string;
   label: string;
-  note: string;
-  skills: Skill[];
-}
-
-export interface Skill {
-  name: string;
-  contexts: Array<'professional' | 'freelance' | 'personal'>;
-  projects: string[];
-  projectIds?: string[];
-  detail?: string;
+  skills: string[];
 }
 
 export interface Social {

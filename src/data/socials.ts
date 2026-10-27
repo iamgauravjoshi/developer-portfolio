@@ -9,8 +9,9 @@ export const socials: Social[] = [
 ];
 
 export const navLinks = [
-  { label: 'Work', href: '#work' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
+  { label: 'Home', href: '#top' },
   { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Work', href: '#work' },
+  { label: 'Skills', href: '#skills' },
 ];
