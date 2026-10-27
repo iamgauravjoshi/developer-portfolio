@@ -1,40 +1,22 @@
 export const philosophy = [
 	{
-		title: "Maintainability over cleverness",
-		body: "Readable, narrow, deletion-friendly modules beat clever abstractions.",
+		title: "Full-stack product engineer",
+		body: "I build web products with React, TypeScript, Node.js, and data technologies.",
 	},
 	{
-		title: "UX is an engineering concern",
-		body: "Loading, error, and empty states ship in the first pass — not the last.",
+		title: "User-focused problem solver",
+		body: "I turn product needs into clear interfaces and dependable workflows.",
 	},
 	{
-		title: "Type safety as documentation",
-		body: "Precise types at domain boundaries catch bugs before review.",
-	},
-	{
-		title: "Performance is a feature",
-		body: "Split routes, lazy assets, transform-only animation. This site included.",
-	},
-	{
-		title: "Ship, measure, iterate",
-		body: "Live prototypes beat slide decks. Every engagement here started as a URL.",
-	},
-	{
-		title: "Honest interfaces",
-		body: "Unverifiable data gets labelled, never invented. Trust is a constraint.",
+		title: "Practical, curious engineer",
+		body: "I value maintainable code and explore AI and 3D when they fit the problem.",
 	},
 ];
 
 export const about = {
-	heading: "Engineer first, interface-obsessed by necessity.",
+	heading: "Building ideas into reality.",
 	paragraphs: [
-		"I’m Gaurav Joshi, a Senior Software Engineer working across the full stack — with a bias for the frontend, where engineering decisions become user trust.",
-		"I focus on professional product engineering and independent projects — most recently a property-management SaaS, AI meeting intelligence, and token analytics.",
-	],
-	interests: [
-		"Maintainable frontend architecture",
-		"SaaS domain modelling (bookings, tenants, billing)",
-		"Applied AI: RAG, multi-provider apps, usage analytics",
-		"Design systems that survive contact with clients",
+		"For me, software development is about solving problems and turning ideas into meaningful digital experiences. I enjoy building clean, efficient, and scalable applications.",
+		"I believe in thoughtful engineering, continuous learning, and creating software that makes a difference.",
 	],
 };
