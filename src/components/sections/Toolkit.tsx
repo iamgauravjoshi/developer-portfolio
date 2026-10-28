@@ -6,10 +6,6 @@ import { skillGroups } from '@/data/skills';
 import { SectionHeading } from '@/components/ui/primitives';
 import { Reveal } from '@/components/motion/primitives';
 
-const visibleSkillGroups = skillGroups.filter(
-  ({ id }) => !['ai-engineering', 'system-design', 'engineering-foundations'].includes(id),
-);
-
 const brandColorEntries: [string, string][] = [
   ...techStack.map(({ name, color }): [string, string] => [name.toLowerCase(), color]),
   ['javascript', '#F7DF1E'],
@@ -67,10 +63,10 @@ export default function Toolkit() {
         index="04"
         eyebrow="Skills"
         title="Tools & skills"
-        body="Languages, frameworks, platforms, and engineering foundations."
+        body="Languages, frameworks, and platforms I use."
       />
       <div className="mt-10 columns-1 gap-4 md:mt-14 md:columns-2">
-        {visibleSkillGroups.map((group, groupIndex) => (
+        {skillGroups.map((group, groupIndex) => (
           <Reveal key={group.id} delay={groupIndex * 0.04} className="mb-4 break-inside-avoid">
             <div className="h-full rounded-2xl border p-5 md:p-6" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
               <h3 className="font-display text-base font-semibold md:text-lg">{group.label}</h3>

@@ -35,7 +35,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.classList.toggle('light', theme === 'light');
     root.classList.toggle('dark', theme === 'dark');
     root.style.colorScheme = theme;
-    window.localStorage.setItem(KEY, theme);
+    try {
+      window.localStorage.setItem(KEY, theme);
+    } catch {
+      // Keep the selected theme active even when browser storage is unavailable.
+    }
     const tint = document.querySelector('meta[name="theme-color"]');
     if (tint) tint.setAttribute('content', theme === 'dark' ? '#201c2a' : '#ffffff');
   }, [theme, initialized]);

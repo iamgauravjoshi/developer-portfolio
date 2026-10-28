@@ -15,7 +15,12 @@ export default function ScrollManager() {
     if (hash) {
       const el = document.getElementById(hash.slice(1));
       if (el) {
-        const t = setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+        const t = setTimeout(() => {
+          const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'auto'
+            : 'smooth';
+          el.scrollIntoView({ behavior, block: 'start' });
+        }, 60);
         return () => clearTimeout(t);
       }
     }

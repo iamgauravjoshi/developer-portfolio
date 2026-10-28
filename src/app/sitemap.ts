@@ -1,13 +1,12 @@
 import type { MetadataRoute } from 'next';
+import { profile } from '@/data/profile';
 import { projects } from '@/data/projects';
-
-const BASE = 'https://gaurav-joshi.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const cases = projects.map((p) => ({
-    url: `${BASE}/work/${p.slug}`,
+    url: `${profile.siteUrl}work/${p.slug}`,
     changeFrequency: 'yearly' as const,
     priority: 0.8,
   }));
-  return [{ url: BASE, changeFrequency: 'monthly' as const, priority: 1 }, ...cases];
+  return [{ url: profile.siteUrl, changeFrequency: 'monthly' as const, priority: 1 }, ...cases];
 }

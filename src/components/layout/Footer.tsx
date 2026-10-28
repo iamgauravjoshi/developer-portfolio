@@ -1,4 +1,5 @@
 import { socials } from "@/data/socials";
+import Link from "next/link";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { SiGithub, SiX } from "react-icons/si";
 
@@ -6,13 +7,13 @@ export default function Footer() {
 	return (
 		<footer className="border-t" style={{ borderColor: "var(--border)" }}>
 			<div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 md:px-8">
-				<a
+				<Link
 					href="/#top"
 					aria-label="Gaurav Joshi — home"
 					className="font-display shrink-0 whitespace-nowrap text-(--accent) font-semibold transition-colors md:text-lg"
 				>
 					Gaurav Joshi
-				</a>
+				</Link>
 				<nav aria-label="Social links">
 					<ul className="flex items-center gap-1 sm:gap-2.5">
 						{socials.map((social) => (

@@ -1,32 +1,36 @@
-# Gaurav Joshi — Portfolio (Next.js)
+# Gaurav Joshi — Portfolio
 
-Senior Software Engineer portfolio, rebuilt on **Next.js 16 + React 19 + Tailwind CSS v4 + Motion**.
+Senior Software Developer portfolio, built with **Next.js 16, React 19, Tailwind CSS v4, and Motion**.
+
+Canonical site: [https://gaurav-joshi.vercel.app/](https://gaurav-joshi.vercel.app/)
 
 > Engineer who builds products, not just interfaces.
 
-## Stack (latest stable, Oct 2026)
+## Runtime and stack
 
-| Package                   | Version                                     |
-| ------------------------- | ------------------------------------------- |
-| Next.js                   | 16.4.0                                      |
-| React / React DOM         | 19.3.0                                      |
-| Tailwind CSS              | 4.3.x                                       |
-| Motion (ex Framer Motion) | 14.x                                        |
-| lucide-react              | 1.54.0 (brand icons moved to `react-icons`) |
-| react-icons               | 5.7.0                                       |
-| TypeScript                | 5.9.x (pinned: Next 16’s supported range)   |
-| Node.js                   | 24 LTS (`node --version` → v24.20.0 here)   |
+Next.js 16 requires Node.js **20.9.0 or newer**. Use Node.js 24 for local development, matching CI and `.nvmrc`.
+
+| Package | Lockfile version |
+| --- | ---: |
+| Next.js | 16.4.3 |
+| React / React DOM | 19.3.0 |
+| Tailwind CSS / Turbopack | 4.3.3 |
+| Motion | 14.6.0 |
+| lucide-react | 1.61.0 |
+| react-icons | 5.7.0 |
+| TypeScript | 5.9.3 |
+| Node.js CI target | 24 |
 
 ## Run locally
 
 ```bash
-npm install
+npm ci
 npm run dev      # http://localhost:3000 (Turbopack)
 ```
 
-## Notes & honest placeholders
+## Project notes
 
-- Experience/employers: **not published** — unverifiable from provided sources.
-- Résumé button falls back to LinkedIn until `profile.resumeUrl` is set.
-- Project visuals are abstract `BrowserFrame` previews, never faked screenshots.
-- Numbers shown: 39 repos (GitHub API, Oct 2026), 4 prototypes (live URLs). No invented metrics.
+- Profile details and the official role are maintained in `src/data/profile.ts`; the experience timeline is in `src/data/experience.ts`.
+- The résumé PDF is served from `public/Gaurav_Joshi_Resume.pdf`.
+- Project previews use abstract `BrowserFrame` visuals rather than screenshots that imply unverified product UI.
+- Project entries and their descriptions are maintained in `src/data/projects.ts`.

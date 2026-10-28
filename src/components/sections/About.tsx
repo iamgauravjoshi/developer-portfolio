@@ -28,7 +28,7 @@ export default function About() {
 			<div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{philosophy.map((p, i) => (
 					<Reveal key={p.title} delay={Math.min(i * 0.05, 0.2)}>
-						<div className="h-full rounded-[1.75rem] p-5 md:p-6 bg-(--surface-elevated) border border-(--border) hover:border-[rgb(139,92,246)] transition-colors duration-500 ease-in-out">
+						<div className="h-full rounded-[1.75rem] p-5 md:p-6 bg-(--surface-elevated) border-2 border-(--border) hover:border-[rgb(139,92,246)] transition-colors duration-500 ease-in-out">
 							<p
 								className="font-mono2 text-[11px]"
 								style={{ color: "var(--accent)" }}

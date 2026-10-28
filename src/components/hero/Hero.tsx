@@ -81,7 +81,7 @@ export default function Hero() {
 							className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"
 							aria-hidden
 						/>
-						Senior Software Engineer
+						{profile.role}
 					</motion.div>
 
 					<motion.div
@@ -117,7 +117,7 @@ export default function Hero() {
 						className="font-serif-it text-[1.35em] leading-none"
 						style={{ color: "var(--foreground)" }}
 					>
-						I design, build and ship products{" "}
+						I build full-stack web products with React, TypeScript, Next.js, and Node.js{" "}
 					</span>
 					for product teams and independent projects.
 				</motion.p>

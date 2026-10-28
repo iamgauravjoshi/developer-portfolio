@@ -1,8 +1,10 @@
 import type { Project, SkillGroup } from '../types';
+import { PROJECT_FILTERS } from './projects';
 
 /** Fail early when authored portfolio data would generate ambiguous or broken content. */
 export function validatePortfolioContent(projects: Project[], skillGroups: SkillGroup[]) {
   const errors: string[] = [];
+  const allowedProjectFilters = new Set<string>(PROJECT_FILTERS);
   const ids = new Set<string>();
   const slugs = new Set<string>();
 
@@ -17,6 +19,17 @@ export function validatePortfolioContent(projects: Project[], skillGroups: Skill
     if (slugs.has(project.slug)) errors.push(`Duplicate project slug: "${project.slug}".`);
     ids.add(project.id);
     slugs.add(project.slug);
+
+    const projectTags = new Set<string>();
+    for (const tag of project.tags) {
+      if (!allowedProjectFilters.has(tag)) {
+        errors.push(`Project "${project.title}" has an invalid work filter: "${tag}".`);
+      }
+      if (projectTags.has(tag)) {
+        errors.push(`Project "${project.title}" has a duplicate work filter: "${tag}".`);
+      }
+      projectTags.add(tag);
+    }
 
     for (const [field, value] of [['liveUrl', project.liveUrl], ['githubUrl', project.githubUrl]] as const) {
       if (!value) continue;

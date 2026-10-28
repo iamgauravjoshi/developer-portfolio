@@ -4,22 +4,16 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { projects } from "@/data/projects";
+import { PROJECT_FILTERS, projects } from "@/data/projects";
 import { profile } from "@/data/profile";
+import { filterProjects } from "@/lib/projectCatalog";
 import { SectionHeading, Chip } from "@/components/ui/primitives";
 import { Reveal } from "@/components/motion/primitives";
 import { Tilt } from "@/components/motion/effects";
 import { skillIcon, GithubIcon } from "./skillIcons";
 import { cn } from "@/lib/utils";
 
-const filters = [
-	"All",
-	"Full Stack",
-	"Frontend",
-	"Backend",
-	"Tools",
-	"Experiments",
-] as const;
+const filters = ["All", ...PROJECT_FILTERS] as const;
 const repositoryColors = [
 	"#8B5CF6",
 	"#6366F1",
@@ -36,37 +30,9 @@ const repositoryColors = [
 ];
 type Filter = (typeof filters)[number];
 
-function tagOf(p: (typeof projects)[number]): Filter[] {
-	const tech = p.technologies.join(" ").toLowerCase();
-	const tags: Filter[] = [];
-	if (
-		/node|express|mongo|jwt|backend|postgres|drizzle|fastapi|python/.test(tech)
-	)
-		tags.push("Backend");
-	if (
-		/react|three|tailwind|framer|html|css|next|electron|d3|radix|zustand/.test(
-			tech,
-		)
-	)
-		tags.push("Frontend");
-	if (tags.includes("Frontend") && tags.includes("Backend"))
-		tags.push("Full Stack");
-	if (
-		/tool|library|utility|redis|rabbitmq|dsa|sql|practice/.test(
-			(p.title + " " + p.description).toLowerCase(),
-		)
-	)
-		tags.push("Tools");
-	if (p.status === "Archived" || p.status === "Prototype")
-		tags.push("Experiments");
-	return [...new Set(tags)];
-}
-
 export default function Engineering() {
 	const [filter, setFilter] = useState<Filter>("All");
-	const list = projects
-		.filter((p) => filter === "All" || tagOf(p).includes(filter))
-		.slice(0, 9);
+	const list = filterProjects(projects, filter);
 
 	return (
 		<section

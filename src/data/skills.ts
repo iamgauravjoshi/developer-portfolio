@@ -3,23 +3,6 @@ import type { SkillGroup } from "../types";
 /** Skills and engineering concepts supplied for the portfolio. */
 export const skillGroups: SkillGroup[] = [
 	{
-		id: "ai-engineering",
-		label: "AI Application Engineering",
-		skills: [
-			"RAG Systems",
-			"LLM APIs",
-			"Embeddings",
-			"Vector Databases",
-			"Semantic Search",
-			"Prompt Engineering",
-			"Tool Calling",
-			"Structured Outputs",
-			"AI Evaluation",
-			"AI SDK",
-			"Gemini API",
-		],
-	},
-	{
 		id: "languages",
 		label: "Languages",
 		skills: ["TypeScript", "JavaScript", "HTML5 / CSS3", "Java", "SQL"],

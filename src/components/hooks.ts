@@ -14,11 +14,17 @@ export function useScrolled(threshold = 24) {
 }
 
 export function useActiveSection(ids: string[]) {
-  const [active, setActive] = useState('');
   const key = ids.join('|');
+  const [sectionState, setSectionState] = useState(() => ({ key, active: '' }));
+
+  // Reset on a key change during render so route changes don't keep a stale
+  // active section while the new observer is being attached.
+  if (sectionState.key !== key) {
+    setSectionState({ key, active: '' });
+  }
+
   useEffect(() => {
     const list = key.split('|');
-    setActive('');
     if (!key) return;
 
     const intersecting = new Set<string>();
@@ -28,7 +34,12 @@ export function useActiveSection(ids: string[]) {
           if (e.isIntersecting) intersecting.add(e.target.id);
           else intersecting.delete(e.target.id);
         }
-        setActive([...list].reverse().find((id) => intersecting.has(id)) ?? '');
+        const active = [...list].reverse().find((id) => intersecting.has(id)) ?? '';
+        setSectionState((current) =>
+          current.key === key && current.active === active
+            ? current
+            : { key, active },
+        );
       },
       { rootMargin: '-40% 0px -55% 0px' },
     );
@@ -38,5 +49,5 @@ export function useActiveSection(ids: string[]) {
     });
     return () => observer.disconnect();
   }, [key]);
-  return active;
+  return sectionState.key === key ? sectionState.active : '';
 }

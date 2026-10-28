@@ -9,6 +9,13 @@ import { GithubIcon, LinkedinIcon } from './skillIcons';
 
 type Status = 'idle' | 'sending' | 'done' | 'error';
 
+const fieldLimits = {
+  name: 120,
+  company: 120,
+  email: 254,
+  message: 1500,
+} as const;
+
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
@@ -33,12 +40,31 @@ export default function Contact() {
       return;
     }
     const next: Record<string, string> = {};
-    const name = String(fd.get('name') ?? '').trim();
-    const email = String(fd.get('email') ?? '').trim();
-    const message = String(fd.get('message') ?? '').trim();
-    if (name.length < 2) next.name = 'Please add your name.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) next.email = 'Enter a valid email address.';
-    if (message.length < 20) next.message = 'Tell me a little more (20+ characters).';
+    const nameValue = String(fd.get('name') ?? '');
+    const emailValue = String(fd.get('email') ?? '');
+    const companyValue = String(fd.get('company') ?? '');
+    const messageValue = String(fd.get('message') ?? '');
+    const name = nameValue.trim();
+    const email = emailValue.trim();
+    const message = messageValue.trim();
+    if (nameValue.length > fieldLimits.name) {
+      next.name = `Name must be ${fieldLimits.name} characters or fewer.`;
+    } else if (name.length < 2) {
+      next.name = 'Please add your name.';
+    }
+    if (emailValue.length > fieldLimits.email) {
+      next.email = `Email must be ${fieldLimits.email} characters or fewer.`;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      next.email = 'Enter a valid email address.';
+    }
+    if (companyValue.length > fieldLimits.company) {
+      next.company = `Company must be ${fieldLimits.company} characters or fewer.`;
+    }
+    if (messageValue.length > fieldLimits.message) {
+      next.message = 'Message must be 1,500 characters or fewer.';
+    } else if (message.length < 20) {
+      next.message = 'Tell me a little more (20+ characters).';
+    }
     setErrors(next);
     if (Object.keys(next).length > 0) {
       setStatus('error');
@@ -120,17 +146,18 @@ export default function Contact() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="ct-name" className="mb-1.5 block text-[13px] font-medium">Name *</label>
-                  <input id="ct-name" name="name" autoComplete="name" className="w-full rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]" style={inputStyle} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'ct-name-err' : undefined} />
+                  <input id="ct-name" name="name" autoComplete="name" maxLength={fieldLimits.name} className="w-full rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]" style={inputStyle} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'ct-name-err' : undefined} />
                   {errors.name && <p id="ct-name-err" className="mt-1 text-[12px] text-red-400" role="alert">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="ct-email" className="mb-1.5 block text-[13px] font-medium">Email *</label>
-                  <input id="ct-email" name="email" type="email" autoComplete="email" className="w-full rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'ct-email-err' : undefined} />
+                  <input id="ct-email" name="email" type="email" autoComplete="email" maxLength={fieldLimits.email} className="w-full rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'ct-email-err' : undefined} />
                   {errors.email && <p id="ct-email-err" className="mt-1 text-[12px] text-red-400" role="alert">{errors.email}</p>}
                 </div>
                 <div>
                   <label htmlFor="ct-company" className="mb-1.5 block text-[13px] font-medium">Company <span style={{ color: 'var(--muted)' }}>(optional)</span></label>
-                  <input id="ct-company" name="company" autoComplete="organization" className="w-full rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} />
+                  <input id="ct-company" name="company" autoComplete="organization" maxLength={fieldLimits.company} className="w-full rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} aria-invalid={!!errors.company} aria-describedby={errors.company ? 'ct-company-err' : undefined} />
+                  {errors.company && <p id="ct-company-err" className="mt-1 text-[12px] text-red-400" role="alert">{errors.company}</p>}
                 </div>
                 <div>
                   <label htmlFor="ct-type" className="mb-1.5 block text-[13px] font-medium">Project type</label>
@@ -145,7 +172,7 @@ export default function Contact() {
               <input type="text" name="company_website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
               <div className="mt-4">
                 <label htmlFor="ct-msg" className="mb-1.5 block text-[13px] font-medium">Message *</label>
-                <textarea id="ct-msg" name="message" rows={5} className="w-full resize-y rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} placeholder="What are you building, and what does success look like?" aria-invalid={!!errors.message} aria-describedby={errors.message ? 'ct-msg-err' : undefined} />
+                <textarea id="ct-msg" name="message" rows={5} maxLength={fieldLimits.message} className="w-full resize-y rounded-xl px-4 py-2.5 text-sm outline-none" style={inputStyle} placeholder="What are you building, and what does success look like?" aria-invalid={!!errors.message} aria-describedby={errors.message ? 'ct-msg-err' : undefined} />
                 {errors.message && <p id="ct-msg-err" className="mt-1 text-[12px] text-red-400" role="alert">{errors.message}</p>}
               </div>
               <button

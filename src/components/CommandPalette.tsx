@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType, type CSSProperties } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, Copy, FileText, Mail, Moon, Search, Sun } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { profile } from '@/data/profile';
@@ -24,11 +24,14 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
   const router = useRouter();
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
+  const reduceMotion = useReducedMotion();
 
   const go = (hash: string) => {
     onClose();
     if (pathname === '/') {
-      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
     } else {
       router.push(`/#${hash}`);
     }

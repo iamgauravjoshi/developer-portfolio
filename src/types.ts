@@ -1,10 +1,12 @@
 export type WorkCategory = 'professional' | 'independent' | 'open-source';
+export type ProjectFilter = 'Full Stack' | 'Frontend' | 'Backend' | 'Tools' | 'Experiments';
 
 export interface Project {
   id: string;
   slug: string;
   title: string;
   category: WorkCategory;
+  tags: ProjectFilter[];
   domain: string;
   problem: string;
   description: string;
@@ -30,10 +32,7 @@ export interface ExperienceEntry {
   careerProgression?: Array<{ position: string; period: string; responsibilities: string[] }>;
   period: string;
   location?: string;
-  summary?: string;
   responsibilities?: string[];
-  technologies: string[];
-  placeholder?: boolean;
 }
 
 export interface SkillGroup {

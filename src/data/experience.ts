@@ -38,15 +38,5 @@ export const experience: ExperienceEntry[] = [
       },
     ],
     period: 'March 2023 — Present',
-    technologies: [
-      'React',
-      'TypeScript',
-      'Node.js',
-      'REST APIs',
-      'JWT',
-      'RBAC',
-      'Three.js',
-      'React Three Fiber',
-    ],
   },
 ];

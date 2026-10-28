@@ -32,14 +32,29 @@ export async function generateMetadata({
 	const project = all.find((p) => p.slug === slug);
 	// Avoid generating project metadata for unknown slugs.
 	if (!project) notFound();
+	const socialTitle = `${project.title} | ${profile.name}`;
+	const socialImage = `${profile.siteUrl}opengraph-image`;
 	return {
 		title: project.title,
 		description: project.description,
 		alternates: { canonical: `/work/${project.slug}` },
 		openGraph: {
-			title: project.title,
+			type: "website",
+			title: socialTitle,
 			description: project.description,
 			url: `/work/${project.slug}`,
+			images: [{
+				url: socialImage,
+				width: 1200,
+				height: 630,
+				alt: `${project.title} — project case study by ${profile.name}`,
+			}],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: socialTitle,
+			description: project.description,
+			images: [socialImage],
 		},
 	};
 }
