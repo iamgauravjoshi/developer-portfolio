@@ -1,7 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const isCI = Boolean(process.env.CI);
-const baseURL = "http://127.0.0.1:3000";
+const port = Number(process.env.PLAYWRIGHT_PORT ?? "3000");
+if (!Number.isInteger(port) || port < 1 || port > 65_535) {
+	throw new Error("PLAYWRIGHT_PORT must be an integer between 1 and 65535.");
+}
+const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
 	testDir: "./tests/e2e",
@@ -22,10 +26,10 @@ export default defineConfig({
 	],
 	webServer: {
 		command: isCI
-			? "npm run start -- --hostname 127.0.0.1"
-			: "npm run dev -- --hostname 127.0.0.1",
+			? `npm run start -- --hostname 127.0.0.1 --port ${port}`
+			: `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
 		url: baseURL,
-		reuseExistingServer: !isCI,
+		reuseExistingServer: !isCI || process.env.PLAYWRIGHT_PORT !== undefined,
 		timeout: 120_000,
 	},
 });

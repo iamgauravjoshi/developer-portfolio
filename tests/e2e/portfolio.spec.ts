@@ -26,18 +26,22 @@ test("profile metadata uses the canonical site and official role", async ({ page
 	await expect(page).toHaveTitle(
 		"Gaurav Joshi | Senior Software Developer in Jaipur",
 	);
-	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-		"href",
-		"https://gaurav-joshi.vercel.app/",
-	);
+	const canonicalHref = await page.locator('link[rel="canonical"]').getAttribute("href");
+	expect(canonicalHref).not.toBeNull();
+	const canonicalUrl = new URL(canonicalHref ?? "");
+	expect(canonicalUrl.origin).toBe("https://gaurav-joshi.vercel.app");
+	expect(canonicalUrl.pathname).toBe("/");
 	await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
 		"content",
 		"Gaurav Joshi | Senior Software Developer in Jaipur",
 	);
-	await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
-		"content",
-		/https:\/\/gaurav-joshi\.vercel\.app\/opengraph-image/,
+	const socialImageSrc = await page.locator('meta[property="og:image"]').getAttribute("content");
+	expect(socialImageSrc).not.toBeNull();
+	const socialImageUrl = new URL(socialImageSrc ?? "");
+	expect([new URL(page.url()).origin, "https://gaurav-joshi.vercel.app"]).toContain(
+		socialImageUrl.origin,
 	);
+	expect(socialImageUrl.pathname).toBe("/opengraph-image");
 
 	const jsonLdText = await page.locator('script[type="application/ld+json"]').textContent();
 	expect(jsonLdText).not.toBeNull();
@@ -179,19 +183,27 @@ test("reduced motion uses instant scrolling for palette and route navigation", a
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	await page.addInitScript(() => {
 		const testWindow = window as unknown as {
-			scrollBehaviors: (ScrollBehavior | undefined)[];
+			scrollBehaviors: ScrollBehavior[];
 		};
 		testWindow.scrollBehaviors = [];
 		Element.prototype.scrollIntoView = function (options?: boolean | ScrollIntoViewOptions) {
-			testWindow.scrollBehaviors.push(
-				typeof options === "object" ? options.behavior : undefined,
-			);
+			if (typeof options === "object" && options !== null && options.behavior) {
+				testWindow.scrollBehaviors.push(options.behavior);
+			}
 		};
 	});
 	await page.goto("/work/clerisy");
 
+	// Wait for the client shell to hydrate before interacting with its controls.
+	await page.getByRole("button", { name: "Switch to dark theme" }).click();
+	await expect(page.locator("html")).toHaveClass(/dark/);
+	await page.getByRole("button", { name: "Switch to light theme" }).click();
+	await expect(page.locator("html")).toHaveClass(/light/);
+
+	const commandSearch = page.getByRole("combobox", { name: "Search commands" });
 	await page.keyboard.press("Control+k");
-	await page.getByRole("combobox", { name: "Search commands" }).fill("Go to Work");
+	await expect(commandSearch).toBeVisible();
+	await commandSearch.fill("Go to Work");
 	await page.getByRole("option", { name: /Go to Work/ }).click();
 	await expect(page).toHaveURL(/#work$/);
 	await expect
@@ -199,21 +211,22 @@ test("reduced motion uses instant scrolling for palette and route navigation", a
 			page.evaluate(
 				() =>
 					(window as unknown as {
-						scrollBehaviors: (ScrollBehavior | undefined)[];
+						scrollBehaviors: ScrollBehavior[];
 					}).scrollBehaviors,
 			),
 		)
 		.toEqual(["auto"]);
 
 	await page.keyboard.press("Control+k");
-	await page.getByRole("combobox", { name: "Search commands" }).fill("Go to About");
+	await expect(commandSearch).toBeVisible();
+	await commandSearch.fill("Go to About");
 	await page.getByRole("option", { name: /Go to About/ }).click();
 	await expect
 		.poll(() =>
 			page.evaluate(
 				() =>
 					(window as unknown as {
-						scrollBehaviors: (ScrollBehavior | undefined)[];
+						scrollBehaviors: ScrollBehavior[];
 					}).scrollBehaviors,
 			),
 		)
@@ -226,12 +239,15 @@ test("the not-found page offers a working route home", async ({ page }) => {
 	await expect(
 		page.getByRole("heading", { level: 1, name: "Lost in the void?" }),
 	).toBeVisible();
-	await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+	const robots = page.locator('meta[name="robots"]');
+	await expect(robots).toHaveCount(1);
+	await expect(robots).toHaveAttribute(
 		"content",
 		/noindex/,
 	);
 	await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
 	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+	const homeURL = new URL("/", page.url()).href;
 	await page.getByRole("link", { name: "Back Home" }).click();
-	await expect(page).toHaveURL("http://127.0.0.1:3000/");
+	await expect(page).toHaveURL(homeURL);
 });

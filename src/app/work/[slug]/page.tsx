@@ -97,7 +97,19 @@ function Block({
 	);
 }
 
-export default async function CaseStudyPage({
+export default function CaseStudyPage({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}) {
+	return (
+		<Suspense fallback={<CaseFallback />}>
+			<CaseStudyContent params={params} />
+		</Suspense>
+	);
+}
+
+async function CaseStudyContent({
 	params,
 }: {
 	params: Promise<{ slug: string }>;
@@ -106,11 +118,7 @@ export default async function CaseStudyPage({
 	const project = all.find((p) => p.slug === slug);
 	if (!project) notFound();
 
-	return (
-		<Suspense fallback={<CaseFallback />}>
-			<CaseBody project={project} />
-		</Suspense>
-	);
+	return <CaseBody project={project} />;
 }
 
 function CaseFallback() {
