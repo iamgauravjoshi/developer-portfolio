@@ -45,7 +45,8 @@ const brandColorEntries: [string, string][] = [
   ['rabbitmq', '#FF6600'],
   ['vitest', '#6E9F18'],
   ['gemini', '#8E75B2'],
-].sort(([first], [second]) => second.length - first.length);
+];
+brandColorEntries.sort(([first], [second]) => second.length - first.length);
 const brandColors = new Map(brandColorEntries);
 
 function colorForSkill(name: string) {
