@@ -54,7 +54,15 @@ export default function OpenGraphImage() {
 					justifyContent: "center",
 				}}
 			>
-				<div style={{ color: "#6d28d9", fontSize: 22, fontWeight: 600 }}>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						color: "#6d28d9",
+						fontSize: 22,
+						fontWeight: 600,
+					}}
+				>
 					{profile.role} · {profile.location}
 				</div>
 				<div

@@ -8,7 +8,7 @@ Canonical site: [https://gaurav-joshi.vercel.app/](https://gaurav-joshi.vercel.a
 
 ## Runtime and stack
 
-Next.js 16 requires Node.js **20.9.0 or newer**. Use Node.js 24 for local development, matching CI and `.nvmrc`.
+Use Node.js **24.20.0** for local development and CI. `.nvmrc` pins this version, and `package.json` declares Node.js 24.20.0 or newer as the supported runtime.
 
 | Package | Lockfile version |
 | --- | ---: |
@@ -19,7 +19,7 @@ Next.js 16 requires Node.js **20.9.0 or newer**. Use Node.js 24 for local develo
 | lucide-react | 1.61.0 |
 | react-icons | 5.7.0 |
 | TypeScript | 5.9.3 |
-| Node.js CI target | 24 |
+| Node.js CI target | 24.20.0 |
 
 ## Run locally
 
