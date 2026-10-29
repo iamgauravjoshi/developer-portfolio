@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { profile } from "@/data/profile";
 import { MaskedLine } from "@/components/motion/primitives";
 import { Magnetic } from "@/components/motion/effects";
@@ -67,23 +67,45 @@ export default function Hero() {
 
 			<div className="mx-auto w-full max-w-6xl px-5 md:px-8">
 				<div className="flex flex-wrap items-start justify-between gap-4">
-					<motion.div
-						initial={{ opacity: 0, y: 12 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6 }}
-						className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono2 text-[11px] tracking-[0.12em] uppercase"
+					<motion.a
+						href="#contact"
+						aria-label="Open for collaboration. Go to contact section."
+						// initial={{ opacity: 0, y: 12 }}
+						animate={{ y: [0, 6, 0] }}
+						transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+						className="group inline-flex items-center gap-3 rounded-full border border-(--border) py-1.5 pl-1.5 pr-2 shadow-[0_8px_24px_-18px_rgba(38,24,64,0.45)] backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-violet-300 hover:shadow-[0_12px_28px_-16px_rgba(124,58,237,0.35)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-violet-500"
 						style={{
-							borderColor: "var(--border)",
-							color: "var(--muted)",
-							background: "var(--surface)",
+							color: "var(--foreground)",
+							background: "color-mix(in srgb, var(--surface) 88%, transparent)",
 						}}
 					>
+						<span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border border-white bg-violet-100 ring-1 ring-violet-200/80">
+							<Image
+								src="/gaurav-joshi-portrait.png"
+								alt=""
+								fill
+								sizes="48px"
+								className="object-cover object-top"
+							/>
+						</span>
+						<span className="flex min-w-0 flex-col text-left leading-tight">
+							<span className="text-[13px] font-semibold tracking-tight">
+								Open for collaboration
+							</span>
+							<span
+								className="mt-0.5 text-xs"
+								style={{ color: "var(--muted)" }}
+							>
+								Projects · Consulting · Mentorship
+							</span>
+						</span>
 						<span
-							className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"
-							aria-hidden
-						/>
-						{profile.role}
-					</motion.div>
+							aria-hidden="true"
+							className="ml-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white shadow-sm transition-transform duration-200 group-hover:translate-x-0.5"
+						>
+							<ArrowRight className="h-4 w-4" />
+						</span>
+					</motion.a>
 
 					<motion.div
 						initial={{ opacity: 0, y: 12 }}
@@ -116,14 +138,17 @@ export default function Hero() {
 							className="mt-6 max-w-xl text-lg leading-relaxed md:text-xl"
 							style={{ color: "var(--muted)" }}
 						>
-							<span
+							I turn ideas into digital experiences that feel effortless, look
+							beautiful, and solve real problems. Always curious, always
+							building, always looking for a better way.
+							{/* <span
 								className="font-serif-it text-[1.35em] leading-none"
 								style={{ color: "var(--foreground)" }}
 							>
-								I build full-stack web products with React, TypeScript, Next.js,
-								and Node.js{" "}
-							</span>
-							for product teams and independent projects.
+								{" "}
+								Always curious, always building, always looking for a better
+								way.{" "}
+							</span> */}
 						</motion.p>
 
 						<motion.div
