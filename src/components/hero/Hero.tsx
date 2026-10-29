@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowDown, ArrowUpRight, FileBadge, FileUser } from "lucide-react";
+import Image from "next/image";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { profile } from "@/data/profile";
 import { MaskedLine } from "@/components/motion/primitives";
 import { Magnetic } from "@/components/motion/effects";
@@ -38,12 +39,12 @@ export default function Hero() {
 	return (
 		<section
 			id="top"
-			className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-32 md:pt-36"
+			className="relative flex min-h-svh items-center overflow-hidden pb-16 pt-24 md:pt-36"
 		>
 			{/* Ambient orbs */}
 			<motion.div
 				aria-hidden
-				className="pointer-events-none absolute -left-40 top-[-10%] h-[480px] w-[480px] rounded-full"
+				className="pointer-events-none absolute -left-40 top-[-10%] h-120 w-120 rounded-full"
 				style={{
 					background:
 						"radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%)",
@@ -54,7 +55,7 @@ export default function Hero() {
 			/>
 			<motion.div
 				aria-hidden
-				className="pointer-events-none absolute -right-40 bottom-[-20%] h-[520px] w-[520px] rounded-full"
+				className="pointer-events-none absolute -right-40 bottom-[-20%] h-130 w-130 rounded-full"
 				style={{
 					background:
 						"radial-gradient(circle, rgba(232,180,74,0.12) 0%, transparent 65%)",
@@ -102,72 +103,90 @@ export default function Hero() {
 					</motion.div>
 				</div>
 
-				<h1 className="font-display mt-6 font-bold leading-[0.95] whitespace-nowrap text-[clamp(2.6rem,8.5vw,6.5rem)]">
-					<MaskedLine text="Gaurav Joshi" delay={0.05} />
-				</h1>
+				<div className="mt-6 flex flex-col-reverse gap-6 items-center lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-8">
+					<div className="min-w-0">
+						<h1 className="font-display font-bold leading-[0.95] whitespace-nowrap text-[clamp(2.6rem,8.5vw,6.5rem)]">
+							<MaskedLine text="Gaurav Joshi" delay={0.05} />
+						</h1>
 
-				<motion.p
-					initial={{ opacity: 0, y: 14 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.7, delay: 0.45 }}
-					className="mt-6 max-w-xl text-lg md:text-xl leading-relaxed"
-					style={{ color: "var(--muted)" }}
-				>
-					<span
-						className="font-serif-it text-[1.35em] leading-none"
-						style={{ color: "var(--foreground)" }}
-					>
-						I build full-stack web products with React, TypeScript, Next.js, and Node.js{" "}
-					</span>
-					for product teams and independent projects.
-				</motion.p>
+						<motion.p
+							initial={{ opacity: 0, y: 14 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.7, delay: 0.45 }}
+							className="mt-6 max-w-xl text-lg leading-relaxed md:text-xl"
+							style={{ color: "var(--muted)" }}
+						>
+							<span
+								className="font-serif-it text-[1.35em] leading-none"
+								style={{ color: "var(--foreground)" }}
+							>
+								I build full-stack web products with React, TypeScript, Next.js,
+								and Node.js{" "}
+							</span>
+							for product teams and independent projects.
+						</motion.p>
 
-				<motion.div
-					initial={{ opacity: 0, y: 14 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.7, delay: 0.58 }}
-					className="mt-8 flex flex-wrap items-center gap-3"
-				>
-					<Magnetic>
-						<a
-							href="#work"
-							className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:scale-[1.03] active:translate-y-0 active:scale-[0.98]"
-							style={{
-								background: "linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%)",
-								boxShadow: "0 10px 28px -16px rgba(124,58,237,0.8)",
-							}}
+						<motion.div
+							initial={{ opacity: 0, y: 14 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.7, delay: 0.58 }}
+							className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3"
 						>
-							View selected work
-							<ArrowDown className="h-4 w-4" aria-hidden />
-						</a>
-					</Magnetic>
-					<Magnetic>
-						<a
-							href={profile.github}
-							target="_blank"
-							rel="noreferrer"
-							className="inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:-translate-y-px active:translate-y-0 active:scale-[0.98]"
-							style={{
-								borderColor: "var(--border-strong)",
-								color: "var(--foreground)",
-								background: "var(--surface)",
-							}}
-						>
-							<GithubIcon className="h-4 w-4" />
-							GitHub
-						</a>
-					</Magnetic>
-					<a
-						href={resumeHref}
-						target="_blank"
-						rel="noreferrer"
-						className="link-underline inline-flex items-center gap-1 text-sm font-medium"
-						style={{ color: "var(--muted)" }}
-					>
-						{profile.resumeUrl && "Download résumé"}
-						<ArrowUpRight className="h-4 w-4" aria-hidden />
-					</a>
-				</motion.div>
+							<Magnetic>
+								<a
+									href="#work"
+									className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:scale-[1.03] active:translate-y-0 active:scale-[0.98]"
+									style={{
+										background:
+											"linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%)",
+										boxShadow: "0 10px 28px -16px rgba(124,58,237,0.8)",
+									}}
+								>
+									View selected work
+									<ArrowDown className="h-4 w-4" aria-hidden />
+								</a>
+							</Magnetic>
+							<Magnetic>
+								<a
+									href={profile.github}
+									target="_blank"
+									rel="noreferrer"
+									className="inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:-translate-y-px active:translate-y-0 active:scale-[0.98]"
+									style={{
+										borderColor: "var(--border-strong)",
+										color: "var(--foreground)",
+										background: "var(--surface)",
+									}}
+								>
+									<GithubIcon className="h-4 w-4" />
+									GitHub
+								</a>
+							</Magnetic>
+							<a
+								href={resumeHref}
+								target="_blank"
+								rel="noreferrer"
+								className="link-underline inline-flex items-center gap-1 text-sm font-medium"
+								style={{ color: "var(--muted)" }}
+							>
+								{profile.resumeUrl && "Download résumé"}
+								<ArrowUpRight className="h-4 w-4" aria-hidden />
+							</a>
+						</motion.div>
+					</div>
+
+					<figure className="relative mx-auto sm:ml-auto sm:mr-0 mt-2 rounded-full overflow-hidden w-full max-w-70 sm:max-w-82.5 lg:mt-0 lg:max-w-95">
+						<Image
+							src="/gaurav-joshi-portrait.png"
+							alt="Portrait of Gaurav Joshi"
+							width={1254}
+							height={1254}
+							preload
+							sizes="(min-width: 1024px) 40vw, (min-width: 640px) 55vw, 80vw"
+							className="relative z-10 h-auto w-full object-contain"
+						/>
+					</figure>
+				</div>
 			</div>
 
 			<motion.a

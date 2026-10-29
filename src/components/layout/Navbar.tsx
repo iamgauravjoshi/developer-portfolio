@@ -6,7 +6,6 @@ import {
 	BriefcaseBusiness,
 	Code2,
 	History,
-	House,
 	Mail,
 	Moon,
 	Sun,
@@ -175,7 +174,6 @@ export default function Navbar({ onCommand }: { onCommand: () => void }) {
 }
 
 const dockItems = [
-	{ label: "Home", href: "#top", Icon: House },
 	{ label: "About", href: "#about", Icon: UserRound },
 	{ label: "Experience", href: "#experience", Icon: History },
 	{ label: "Work", href: "#work", Icon: BriefcaseBusiness },
