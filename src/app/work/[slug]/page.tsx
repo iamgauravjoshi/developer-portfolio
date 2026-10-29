@@ -149,6 +149,8 @@ function CaseBody({ project }: { project: Project }) {
 	const meta = categoryMeta[project.category];
 	const idx = all.findIndex((p) => p.slug === project.slug);
 	const next = all[(idx + 1) % all.length];
+	let sectionNumber = 0;
+	const nextSectionNumber = () => String(++sectionNumber).padStart(2, "0");
 
 	return (
 		<main
@@ -217,7 +219,7 @@ function CaseBody({ project }: { project: Project }) {
 			</div>
 
 			<div className="mt-8 space-y-4">
-				<Block n="01" title="Context">
+				<Block n={nextSectionNumber()} title="Context">
 					<p>
 						<span
 							style={{ color: "var(--foreground)" }}
@@ -225,12 +227,13 @@ function CaseBody({ project }: { project: Project }) {
 						>
 							{project.domain}.
 						</span>
+						{project.context && ` ${project.context}`}
 					</p>
 				</Block>
-				<Block n="02" title="Problem">
+				<Block n={nextSectionNumber()} title="Problem">
 					<p>{project.problem}</p>
 				</Block>
-				<Block n="03" title="My role">
+				<Block n={nextSectionNumber()} title="My role">
 					<p>{project.role}</p>
 					<ul className="mt-3 space-y-1.5">
 						{project.responsibilities.map((r) => (
@@ -244,16 +247,16 @@ function CaseBody({ project }: { project: Project }) {
 					</ul>
 				</Block>
 				{project.challenges && (
-					<Block n="04" title="Constraints & challenges">
+					<Block n={nextSectionNumber()} title="Constraints & challenges">
 						<p>{project.challenges}</p>
 					</Block>
 				)}
 				{project.solution && (
-					<Block n="05" title="Architecture & approach">
+					<Block n={nextSectionNumber()} title="Architecture & approach">
 						<p>{project.solution}</p>
 					</Block>
 				)}
-				<Block n="06" title="Technical implementation">
+				<Block n={nextSectionNumber()} title="Technical implementation">
 					<ul className="space-y-1.5">
 						{project.highlights.map((h) => (
 							<li key={h} className="flex gap-2">
@@ -266,17 +269,19 @@ function CaseBody({ project }: { project: Project }) {
 					</ul>
 				</Block>
 				{project.outcome && (
-					<Block n="07" title="Result">
+					<Block n={nextSectionNumber()} title="Result">
 						<p>{project.outcome}</p>
 					</Block>
 				)}
-				<Block n="08" title="Tech stack">
-					<div className="flex flex-wrap gap-2">
-						{project.technologies.map((t) => (
-							<Chip key={t}>{t}</Chip>
-						))}
-					</div>
-				</Block>
+				{project.technologies.length > 0 && (
+					<Block n={nextSectionNumber()} title="Tech stack">
+						<div className="flex flex-wrap gap-2">
+							{project.technologies.map((t) => (
+								<Chip key={t}>{t}</Chip>
+							))}
+						</div>
+					</Block>
+				)}
 			</div>
 
 			<Reveal className="mt-10">

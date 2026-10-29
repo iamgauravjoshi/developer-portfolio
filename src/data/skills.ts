@@ -80,13 +80,13 @@ export const categoryMeta = {
 		description: "Work delivered inside companies and teams.",
 	},
 	independent: {
-		label: "Independent",
+		label: "Personal",
 		color: "#a78bfa",
-		description: "Experiments, tools, prototypes, and learning projects.",
+		description: "Projects designed and developed independently.",
 	},
 	"open-source": {
-		label: "Open Source",
+		label: "Personal · Open Source",
 		color: "#a78bfa",
-		description: "Shared libraries and MIT-licensed work.",
+		description: "Personal projects shared with the open-source community.",
 	},
 } as const;

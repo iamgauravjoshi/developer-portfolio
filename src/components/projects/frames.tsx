@@ -48,11 +48,13 @@ export function BrowserFrame({ project, tall = false }: { project: Project; tall
             {project.problem}
           </p>
         </div>
-        <div className="relative flex flex-wrap gap-2">
-          {project.technologies.slice(0, 4).map((t) => (
-            <Chip key={t}>{t}</Chip>
-          ))}
-        </div>
+        {project.technologies.length > 0 && (
+          <div className="relative flex flex-wrap gap-2">
+            {project.technologies.slice(0, 4).map((t) => (
+              <Chip key={t}>{t}</Chip>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

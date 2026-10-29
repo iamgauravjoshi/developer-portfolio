@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { PROJECT_FILTERS, projects } from "@/data/projects";
+import { categoryMeta } from "@/data/skills";
 import { profile } from "@/data/profile";
 import { filterProjects } from "@/lib/projectCatalog";
 import { SectionHeading, Chip } from "@/components/ui/primitives";
@@ -14,6 +15,11 @@ import { skillIcon, GithubIcon } from "./skillIcons";
 import { cn } from "@/lib/utils";
 
 const filters = ["All", ...PROJECT_FILTERS] as const;
+const originFilters = [
+	{ label: "All work", value: "all" },
+	{ label: "Professional", value: "professional" },
+	{ label: "Personal", value: "personal" },
+] as const;
 const repositoryColors = [
 	"#8B5CF6",
 	"#6366F1",
@@ -29,10 +35,17 @@ const repositoryColors = [
 	"#D946EF",
 ];
 type Filter = (typeof filters)[number];
+type OriginFilter = (typeof originFilters)[number]["value"];
 
 export default function Engineering() {
 	const [filter, setFilter] = useState<Filter>("All");
-	const list = filterProjects(projects, filter);
+	const [originFilter, setOriginFilter] = useState<OriginFilter>("all");
+	const list = filterProjects(projects, filter).filter((project) => {
+		if (originFilter === "all") return true;
+		if (originFilter === "professional")
+			return project.category === "professional";
+		return project.category !== "professional";
+	});
 
 	return (
 		<section
@@ -47,12 +60,36 @@ export default function Engineering() {
 				index="03"
 				eyebrow="Selected projects"
 				title="Work"
-				body="A collection of projects where thoughtful design meets purposeful development."
+				body="Professional products I helped build and personal projects I designed and developed."
 			/>
+			<div
+				className="mb-3 flex flex-wrap gap-2"
+				role="group"
+				aria-label="Filter projects by origin"
+			>
+				{originFilters.map(({ label, value }) => (
+					<button
+						key={value}
+						onClick={() => setOriginFilter(value)}
+						aria-pressed={originFilter === value}
+						className="rounded-full border px-4 py-1.5 text-[13px] font-medium transition-all"
+						style={{
+							borderColor:
+								originFilter === value ? "var(--foreground)" : "var(--border)",
+							background:
+								originFilter === value ? "var(--foreground)" : "transparent",
+							color:
+								originFilter === value ? "var(--background)" : "var(--muted)",
+						}}
+					>
+						{label}
+					</button>
+				))}
+			</div>
 			<div
 				className="mb-6 flex flex-wrap gap-2"
 				role="group"
-				aria-label="Filter projects"
+				aria-label="Filter projects by focus"
 			>
 				{filters.map((f) => (
 					<button
@@ -123,11 +160,17 @@ export default function Engineering() {
 									}}
 								/>
 								<div className="relative z-10 flex h-full flex-col">
-									<div
-										className="flex justify-end"
-										style={{ color: "var(--muted)" }}
-									>
-										<GithubIcon className="h-4 w-4" />
+									<div className="flex justify-end">
+										<span
+											className="rounded-full border px-2.5 py-1 font-mono2 text-[10px] uppercase tracking-wide"
+											style={{
+												color: categoryMeta[p.category].color,
+												borderColor: `color-mix(in srgb, ${categoryMeta[p.category].color} 32%, transparent)`,
+												background: `color-mix(in srgb, ${categoryMeta[p.category].color} 9%, var(--surface))`,
+											}}
+										>
+											{categoryMeta[p.category].label}
+										</span>
 									</div>
 									<h3 className="font-display mt-2.5 text-lg font-semibold">
 										<Link href={`/work/${p.slug}`} className="link-underline">
@@ -140,17 +183,19 @@ export default function Engineering() {
 									>
 										{p.description}
 									</p>
-									<div className="mt-3 flex flex-wrap gap-1.5">
-										{p.technologies.slice(0, 3).map((t) => {
-											const TIcon = skillIcon(t);
-											return (
-												<Chip key={t}>
-													<TIcon className="h-3 w-3" />
-													{t}
-												</Chip>
-											);
-										})}
-									</div>
+									{p.technologies.length > 0 && (
+										<div className="mt-3 flex flex-wrap gap-1.5">
+											{p.technologies.slice(0, 3).map((t) => {
+												const TIcon = skillIcon(t);
+												return (
+													<Chip key={t}>
+														<TIcon className="h-3 w-3" />
+														{t}
+													</Chip>
+												);
+											})}
+										</div>
+									)}
 									<div className="mt-auto flex items-center gap-3 pt-4 text-[13px] font-medium">
 										<Link
 											href={`/work/${p.slug}`}
@@ -189,7 +234,8 @@ export default function Engineering() {
 						background: "var(--surface)",
 					}}
 				>
-					<GithubIcon className="h-4 w-4" /> More on GitHub — 39 repositories
+					<GithubIcon className="h-4 w-4" /> More on GitHub{" "}
+					<ArrowUpRight className="h-4 w-4" aria-hidden />
 				</a>
 			</Reveal>
 		</section>

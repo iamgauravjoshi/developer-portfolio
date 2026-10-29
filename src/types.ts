@@ -8,6 +8,7 @@ export interface Project {
   category: WorkCategory;
   tags: ProjectFilter[];
   domain: string;
+  context?: string;
   problem: string;
   description: string;
   role: string;
@@ -17,9 +18,6 @@ export interface Project {
   challenges?: string;
   solution?: string;
   outcome?: string;
-  status: 'Live' | 'Prototype' | 'In development' | 'Archived' | 'Confidential';
-  featured?: boolean;
-  confidential?: boolean;
   liveUrl?: string;
   githubUrl?: string;
   accent: string;

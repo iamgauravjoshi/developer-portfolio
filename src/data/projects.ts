@@ -9,12 +9,126 @@ export const PROJECT_FILTERS = [
 ] as const satisfies readonly ProjectFilter[];
 
 /**
- * Independent + professional engineering projects.
- * Newest first. Everything here is verifiable from the GitHub profile —
- * descriptions come from repository descriptions, READMEs, and manifests.
- * No invented metrics.
+ * Professional projects are based on the author's provided work history;
+ * independent project details are grounded in their repositories.
+ * No unverified metrics or technology stacks are added.
  */
 export const projects: Project[] = [
+	{
+		id: "okruti-iam",
+		slug: "okruti-iam",
+		title: "Okruti IAM",
+		category: "professional",
+		tags: ["Full Stack", "Backend", "Tools"],
+		domain: "Identity & Access Management · Multi-tenant SaaS",
+		problem:
+			"SaaS applications need consistent sign-in and authorization across customer tenants, client applications, and access scopes.",
+		description:
+			"A multi-tenant identity and access management platform that centralizes authentication and authorization for SaaS applications, with an administration console and Node.js integration SDK.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Developed scoped access assignments across platform, tenant, and client levels.",
+			"Implemented role-based authorization with explicit allow and deny effects, expiring assignments, deny-overrides, and default-deny behavior.",
+			"Built OAuth 2.0 and OpenID Connect flows, token issuance, live permission checks, decision history, and access-change webhooks.",
+			"Created the React administration console and Node.js SDK for connected-application sign-in and permission checks.",
+		],
+		technologies: [
+			"React",
+			"TypeScript",
+			"Zustand",
+			"Node.js",
+			"PostgreSQL",
+			"Drizzle ORM",
+			"OAuth 2.0",
+			"OpenID Connect",
+			"JWT",
+		],
+		challenges:
+			"Authorization decisions had to account for application subscriptions, client availability, assignment scope and expiry, with explicit denials taking precedence and unassigned access denied by default.",
+		solution:
+			"Centralized identity and access administration across applications, tenants, and clients. Connected applications can use signed tokens or live authorization checks; decisions are recorded and access changes can be sent through webhooks.",
+		highlights: [
+			"Administrators manage tenants, clients, users, applications, roles, permissions, and access assignments.",
+			"Applications can be subscribed to by tenants and enabled for specific clients.",
+			"Scoped assignments support expiration and explicit allow or deny effects.",
+			"Connected applications integrate through OAuth/OIDC flows, signed tokens, live checks, and a Node.js SDK.",
+		],
+		outcome:
+			"Delivered a shared identity and authorization layer with an administration console and integration paths for connected SaaS applications.",
+		accent: "#8b5cf6",
+	},
+	{
+		id: "people-nest",
+		slug: "people-nest",
+		title: "People Nest",
+		category: "professional",
+		tags: ["Full Stack"],
+		domain: "HRMS · Employee lifecycle management",
+		problem:
+			"Employee lifecycle management needs coordinated HR workflows and secure experiences tailored to each user role.",
+		description:
+			"A scalable HRMS portal focused on employee lifecycle management, workflow handling, and secure role-based user experiences.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Built portal features focused on employee lifecycle management.",
+			"Implemented workflow handling across HR processes.",
+			"Developed secure user experiences based on role.",
+		],
+		technologies: [],
+		solution:
+			"Organized the portal around employee lifecycle workflows and role-based user experiences.",
+		highlights: [
+			"Employee lifecycle management in a centralized HRMS portal.",
+			"Workflow handling for HR processes.",
+			"Secure, role-based user experiences.",
+		],
+		outcome:
+			"Delivered a scalable HRMS portal centered on employee lifecycle workflows and role-based access.",
+		accent: "#8b5cf6",
+	},
+	{
+		id: "rcr-mining-technologies",
+		slug: "rcr-mining-technologies",
+		title: "RCR Mining Technologies",
+		category: "professional",
+		tags: ["Frontend", "Tools"],
+		domain: "E-commerce · 3D equipment configurator",
+		context:
+			"RCR Mining Technologies, part of NRW Holdings, manufactures materials-handling and processing equipment.",
+		problem:
+			"Complex mining equipment needs a commerce experience where customers can explore products and configure equipment interactively.",
+		description:
+			"An interactive Dynamics 365 Commerce experience for RCR Mining Technologies, featuring a 3D equipment configurator and near real-time data updates.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Developed a Three.js product configurator integrated with React and Microsoft Dynamics 365 Commerce.",
+			"Customized commerce flows, including cart functionality and Site Builder enhancements.",
+			"Built reusable product-grid features for filtering, sorting, and pagination.",
+			"Implemented polling for near real-time updates and optimized rendering, state management, and asynchronous data handling.",
+			"Joined client requirement-gathering calls to align delivery with project goals.",
+		],
+		technologies: [
+			"Microsoft Dynamics 365",
+			"React",
+			"TypeScript",
+			"SCSS",
+			"Three.js",
+			"React Three Fiber",
+		],
+		challenges:
+			"The configurator combined 3D rendering, commerce integration, and polling-driven updates, so render cycles and asynchronous state changes needed careful optimization to reduce UI lag.",
+		solution:
+			"Integrated a Three.js configurator with Dynamics 365 Commerce, extended cart and Site Builder flows, and built a reusable product grid with filtering, sorting, and pagination.",
+		highlights: [
+			"Interactive 3D equipment configuration using Three.js and React.",
+			"Dynamics 365 Commerce cart and Site Builder customizations.",
+			"Polling-based near real-time updates with optimized render and state flows.",
+			"Direct participation in client requirement-gathering calls.",
+		],
+		outcome:
+			"Delivered an interactive equipment-commerce experience with 3D configuration, product discovery, and near real-time updates.",
+		accent: "#8b5cf6",
+	},
 	{
 		id: "clerisy",
 		slug: "clerisy",
@@ -48,10 +162,14 @@ export const projects: Project[] = [
 			"Provider-agnostic AI layer — swap models without rewriting features",
 			"Tested with Vitest and Testing Library from the start",
 		],
-		status: "Prototype",
-		featured: true,
 		githubUrl: "https://github.com/iamgauravjoshi/Clerisy",
 		accent: "#a78bfa",
+		challenges:
+			"Integrating multiple AI providers without tying product features to one vendor, while keeping the provider layer and application data typed.",
+		solution:
+			"Built an Electron desktop shell with a provider-agnostic AI SDK layer for Anthropic, Google, and OpenAI. Zod schemas validate structured data, and the UI can work across providers without being rewritten for each integration.",
+		outcome:
+			"Delivered a multi-provider desktop prototype with packaged Windows builds and typed validation around its AI integrations.",
 	},
 	{
 		id: "classloom",
@@ -76,8 +194,6 @@ export const projects: Project[] = [
 			"Reusable component architecture instead of per-page one-offs",
 			"Built for low-training school staff: dense but legible UI",
 		],
-		status: "In development",
-		featured: true,
 		githubUrl: "https://github.com/iamgauravjoshi/classloom",
 		accent: "#a78bfa",
 	},
@@ -112,10 +228,14 @@ export const projects: Project[] = [
 			"Server-state caching with React Query + client state in Zustand",
 			"Relational modelling for a genuinely CRUD-heavy domain",
 		],
-		status: "In development",
-		featured: true,
 		githubUrl: "https://github.com/iamgauravjoshi/DwellDesk",
 		accent: "#a78bfa",
+		challenges:
+			"The product combines relational property, tenant, and billing data with client-side workflows, so server-fetched data and local interaction state need clear ownership.",
+		solution:
+			"Built with the Next.js App Router, PostgreSQL, and typed Drizzle access. React Query handles server-state caching while Zustand holds client interaction state.",
+		outcome:
+			"Established an in-development multi-tenant property-management product with relational domain modeling and separated server and client state.",
 	},
 	{
 		id: "vidscribe",
@@ -140,8 +260,6 @@ export const projects: Project[] = [
 			"Summary hierarchy: TL;DR → key points → full transcript",
 			"MIT-licensed open repository",
 		],
-		status: "Prototype",
-		featured: true,
 		githubUrl: "https://github.com/iamgauravjoshi/VidScribe",
 		accent: "#a78bfa",
 	},
@@ -168,7 +286,6 @@ export const projects: Project[] = [
 			"Authenticated document persistence",
 			"Composable content blocks over fixed templates",
 		],
-		status: "Archived",
 		githubUrl: "https://github.com/iamgauravjoshi/career-canvas-frontend",
 		accent: "#a78bfa",
 	},
@@ -204,7 +321,6 @@ export const projects: Project[] = [
 			"Accessible dialogs and primitives via Radix UI",
 			"E2E-tested delivery pipeline (typecheck → build → Playwright)",
 		],
-		status: "Prototype",
 		githubUrl: "https://github.com/iamgauravjoshi/token-atlas",
 		accent: "#a78bfa",
 	},
@@ -231,8 +347,6 @@ export const projects: Project[] = [
 			"Accessibility-first: focus states, keyboard support, ARIA",
 			"Provides reusable patterns for consistent product interfaces",
 		],
-		status: "In development",
-		featured: true,
 		githubUrl: "https://github.com/iamgauravjoshi/akriti-ui",
 		accent: "#a78bfa",
 	},
@@ -259,13 +373,10 @@ export const projects: Project[] = [
 			"Orbit + constrained inspection controls",
 			"Separated core (ThreeDConfigurator) from viewer app",
 		],
-		status: "Prototype",
 		githubUrl: "https://github.com/iamgauravjoshi/ThreeD-Model-Viewer",
 		accent: "#a78bfa",
 	},
 ];
-
-export const featuredProjects = projects.filter((p) => p.featured);
 
 export const getProject = (slug: string) =>
 	projects.find((p) => p.slug === slug);
