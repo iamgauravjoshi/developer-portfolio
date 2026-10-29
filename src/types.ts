@@ -15,6 +15,7 @@ export interface Project {
   responsibilities: string[];
   technologies: string[];
   highlights: string[];
+  hasCaseStudy?: boolean;
   challenges?: string;
   solution?: string;
   outcome?: string;

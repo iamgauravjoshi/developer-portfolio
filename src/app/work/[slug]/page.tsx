@@ -18,9 +18,10 @@ import { GithubIcon } from "@/components/sections/skillIcons";
 import type { Project } from "@/types";
 
 const all = projects;
+const caseStudies = all.filter((project) => project.hasCaseStudy !== false);
 
 export function generateStaticParams() {
-	return all.map((p) => ({ slug: p.slug }));
+	return caseStudies.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -31,7 +32,7 @@ export async function generateMetadata({
 	const { slug } = await params;
 	const project = all.find((p) => p.slug === slug);
 	// Avoid generating project metadata for unknown slugs.
-	if (!project) notFound();
+	if (!project || project.hasCaseStudy === false) notFound();
 	const socialTitle = `${project.title} | ${profile.name}`;
 	const socialImage = `${profile.siteUrl}opengraph-image`;
 	return {
@@ -116,7 +117,7 @@ async function CaseStudyContent({
 }) {
 	const { slug } = await params;
 	const project = all.find((p) => p.slug === slug);
-	if (!project) notFound();
+	if (!project || project.hasCaseStudy === false) notFound();
 
 	return <CaseBody project={project} />;
 }
@@ -147,8 +148,8 @@ function CaseFallback() {
 
 function CaseBody({ project }: { project: Project }) {
 	const meta = categoryMeta[project.category];
-	const idx = all.findIndex((p) => p.slug === project.slug);
-	const next = all[(idx + 1) % all.length];
+	const idx = caseStudies.findIndex((p) => p.slug === project.slug);
+	const next = caseStudies[(idx + 1) % caseStudies.length];
 	let sectionNumber = 0;
 	const nextSectionNumber = () => String(++sectionNumber).padStart(2, "0");
 

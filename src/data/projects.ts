@@ -19,6 +19,7 @@ export const projects: Project[] = [
 		slug: "okruti-iam",
 		title: "Okruti IAM",
 		category: "professional",
+		hasCaseStudy: true,
 		tags: ["Full Stack", "Backend", "Tools"],
 		domain: "Identity & Access Management · Multi-tenant SaaS",
 		problem:
@@ -62,6 +63,7 @@ export const projects: Project[] = [
 		slug: "people-nest",
 		title: "People Nest",
 		category: "professional",
+		hasCaseStudy: true,
 		tags: ["Full Stack"],
 		domain: "HRMS · Employee lifecycle management",
 		problem:
@@ -74,7 +76,17 @@ export const projects: Project[] = [
 			"Implemented workflow handling across HR processes.",
 			"Developed secure user experiences based on role.",
 		],
-		technologies: [],
+		technologies: [
+			"Next.js",
+			"React",
+			"TypeScript",
+			"Tailwind CSS",
+			"Sass/SCSS",
+			"Zustand",
+			"React Hook Form",
+			"Recharts",
+			"Lucide React",
+		],
 		solution:
 			"Organized the portal around employee lifecycle workflows and role-based user experiences.",
 		highlights: [
@@ -91,6 +103,7 @@ export const projects: Project[] = [
 		slug: "rcr-mining-technologies",
 		title: "RCR Mining Technologies",
 		category: "professional",
+		hasCaseStudy: true,
 		tags: ["Frontend", "Tools"],
 		domain: "E-commerce · 3D equipment configurator",
 		context:
@@ -127,6 +140,120 @@ export const projects: Project[] = [
 		],
 		outcome:
 			"Delivered an interactive equipment-commerce experience with 3D configuration, product discovery, and near real-time updates.",
+		accent: "#8b5cf6",
+	},
+	{
+		id: "bremworth-aus",
+		slug: "bremworth-aus",
+		title: "Bremworth AUS",
+		category: "professional",
+		hasCaseStudy: true,
+		tags: ["Frontend", "Tools"],
+		domain: "E-commerce · Premium carpets and rugs",
+		context:
+			"Bremworth creates high-performance carpets and rugs from New Zealand wool.",
+		problem:
+			"Customers need to find relevant carpet products and compare detailed product information through a clear e-commerce experience.",
+		description:
+			"Front-end contributions to Bremworth's Dynamics 365 Commerce experience, improving product search, descriptions, and merchandising workflows.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Built front-end features for the Bremworth e-commerce website using Microsoft Dynamics 365.",
+			"Customized platform modules for product search and richer product descriptions.",
+			"Developed reusable UI components and product grids with filtering, sorting, and pagination.",
+			"Supported e-commerce, CSU, and back-office workflows through tailored front-end enhancements.",
+		],
+		technologies: ["Microsoft Dynamics 365", "React", "TypeScript", "SCSS"],
+		highlights: [
+			"Product search and detail enhancements in Dynamics 365 Commerce.",
+			"Reusable product discovery components with filtering, sorting, and pagination.",
+			"Front-end support for e-commerce and back-office workflows.",
+		],
+		challenges:
+			"The commerce experience needed to improve product discovery while fitting existing e-commerce, CSU, and back-office workflows.",
+		solution:
+			"Customized Dynamics 365 Commerce modules for search and product descriptions, and built reusable product grids with filtering, sorting, and pagination.",
+		outcome:
+			"Improved product search, product information, and merchandising workflows through reusable front-end features.",
+		accent: "#8b5cf6",
+	},
+	{
+		id: "bakers-cobs",
+		slug: "bakers-cobs",
+		title: "Bakers & COBS",
+		category: "professional",
+		hasCaseStudy: true,
+		tags: ["Frontend", "Tools"],
+		domain: "E-commerce · Bakery products",
+		problem:
+			"Bakery commerce experiences needed project-specific Dynamics 365 modules that could work alongside third-party systems connected to D365 CRM.",
+		description:
+			"Supported design and module customization for bakery e-commerce experiences built with Dynamics 365 Commerce and Site Builder.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Customized Dynamics 365 modules to match project requirements.",
+			"Created project-specific modules and components inside the Dynamics 365 application.",
+			"Supported custom modules working alongside third-party systems connected to D365 CRM.",
+		],
+		technologies: [
+			"Microsoft Dynamics 365",
+			"React",
+			"TypeScript",
+			"SCSS",
+			"Site Builder",
+		],
+		highlights: [
+			"Project-specific commerce modules and components.",
+			"Dynamics 365 Site Builder customizations.",
+			"Support for third-party integrations connected to D365 CRM.",
+		],
+		challenges:
+			"Custom bakery commerce modules needed to fit project requirements and coexist with third-party applications connected to Dynamics 365 CRM.",
+		solution:
+			"Customized Dynamics 365 modules and built project-specific components using React, TypeScript, SCSS, and Site Builder.",
+		outcome:
+			"Supported bakery e-commerce flows with tailored modules designed to work alongside connected third-party systems.",
+		accent: "#8b5cf6",
+	},
+	{
+		id: "cpa-australia-poc",
+		slug: "cpa-australia-poc",
+		title: "CPA Australia (POC)",
+		category: "professional",
+		hasCaseStudy: true,
+		tags: ["Frontend", "Tools"],
+		domain: "E-commerce · Online courses and video",
+		context:
+			"A proof of concept for selling courses and video lectures through static pages and dynamic course and video listings.",
+		problem:
+			"The commerce experience needed to combine course discovery, video content, and customizable Dynamics 365 modules.",
+		description:
+			"Contributed to a Dynamics 365 proof of concept for online courses and video lectures, including static content, dynamic listings, and video integration.",
+		role: "Software Developer on the Okruti IT Consulting Pvt. Ltd. team",
+		responsibilities: [
+			"Collaborated on the proof of concept for selling online courses and video lectures.",
+			"Implemented and styled the header, footer, and navigation through Site Builder and SCSS.",
+			"Customized Dynamics 365 modules to support video integration.",
+			"Helped validate the feasibility and scalability of the proposed commerce experience.",
+		],
+		technologies: [
+			"Microsoft Dynamics 365",
+			"React",
+			"TypeScript",
+			"SCSS",
+			"Site Builder",
+		],
+		highlights: [
+			"Static course content with dynamic course and video listings.",
+			"Site Builder navigation and layout customizations.",
+			"Video integration support in Dynamics 365 modules.",
+		],
+		challenges:
+			"The proof of concept needed to combine static content, dynamic course and video listings, and video support within a customizable commerce experience.",
+		solution:
+			"Built header, footer, and navigation through Site Builder with SCSS, and customized Dynamics 365 modules to support video integration.",
+		outcome:
+			"Helped validate the feasibility and scalability of the proposed course and video commerce experience.",
 		accent: "#8b5cf6",
 	},
 	{
